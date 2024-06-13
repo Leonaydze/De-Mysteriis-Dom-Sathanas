@@ -135,7 +135,6 @@
     <ClCompile Include="Pugalo.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Player.h" />

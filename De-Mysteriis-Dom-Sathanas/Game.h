@@ -6,7 +6,7 @@ enum GameScreen { MAIN_MENU, SETTINGS, LEVEL_1, LEVEL_2, LEVEL_3 };
 void MapLogic();
 
 void DrawMap();
- 
+
 int GetCurrentMap();
 
 void Update();

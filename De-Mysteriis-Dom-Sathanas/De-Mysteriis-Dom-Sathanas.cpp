@@ -15,8 +15,9 @@ int main()
 	SetTargetFPS(60);
 
 	while (!exitWindow) {
-		if (WindowShouldClose() || IsKeyPressed(KEY_ESCAPE)) exitWindowRequested = true;
-		
+		if (WindowShouldClose() && GetCurrentMap() != 0 || IsKeyPressed(KEY_ESCAPE) && GetCurrentMap() != 0){
+			exitWindowRequested = true;
+		}
 		if (exitWindowRequested)
 		{
 			if (IsKeyPressed(KEY_Y)) {

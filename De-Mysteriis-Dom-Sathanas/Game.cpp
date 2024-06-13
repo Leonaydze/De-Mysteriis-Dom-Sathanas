@@ -8,7 +8,7 @@ Player player = Player();
 
 Pugalo pugalo = Pugalo();
 
-Ground mainGroundFloor = { { 0, 1850 } , 1080, 1940, DARKGRAY};
+Ground mainGroundFloor = { { 0, 17 } , GetMonitorWidth(GetCurrentMonitor()), GetMonitorHeight(GetCurrentMonitor()) + 10, WHITE };
 Ground g2, g3;
 
 extern GameScreen _currentScreen = MAIN_MENU;
@@ -58,11 +58,8 @@ void DrawMap() {
         DrawText("Play", GetScreenWidth() / 2 - 40, GetScreenHeight() / 2 - 20, 40, BLACK);
         break;
     case LEVEL_1:
-        DrawRectangle(0, GetScreenHeight() - 50, GetScreenWidth(), GetScreenHeight(), DARKGRAY);
         DrawText("LEVEL_1", 20, 20, 40, WHITE);
-
         pugalo.Draw();
-
         break;
         EndDrawing();
     }
@@ -75,6 +72,7 @@ int GetCurrentMap() {
 void Update() {
     player.PlayerController();
     player.Draw();
+    mainGroundFloor.GroundDraw();
 
     if (player.IsPlayerJump()) {
         player.MoveVertically();
@@ -84,4 +82,9 @@ void Update() {
         player.SetPlayerJump(false);
         player.MoveVerticallyDown();
     }
+}
+
+bool PlayerOnGround(Player& player, Ground& ground) {
+    return (player.GetPlayerPositionX() >= ground.GetGroundPositionX() && player.GetPlayerPositionX() <= ground.GetGroundPositionX() + ground.GetGroundWidth()
+        && player.GetPlayerPositionY() >= ground.GetGroundPositionY() && player.GetPlayerPositionY() <= ground.GetGroundPositionY() + ground.GetGroundHeight());
 }
