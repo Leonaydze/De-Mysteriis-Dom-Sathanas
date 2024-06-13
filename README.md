@@ -2,3 +2,5 @@
 De-Mysteriis-Dom-Sathanas - it is our game for project in academy
 
 This game is made in the style of Blasphemous with black metal theme.
+
+The game is made by the Filosofem Studio
