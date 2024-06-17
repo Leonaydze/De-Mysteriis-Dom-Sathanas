@@ -13,5 +13,3 @@ int Enemy::GetEnemyDamage(){
 void Enemy::DrawEnemy(){
 	DrawRectangle(_enemyPosition.x, _enemyPosition.y, 64, 64, RED);
 }
-
-
