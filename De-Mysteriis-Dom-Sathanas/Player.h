@@ -27,6 +27,8 @@ private:
 	void SetRandomDamage();
 
 	void MissAttack();
+	void DrawHUD();
+
 public:
 	Player(Vector2 playerPosition);
 

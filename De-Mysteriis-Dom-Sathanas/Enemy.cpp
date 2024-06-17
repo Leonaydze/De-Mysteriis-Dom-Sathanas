@@ -1,5 +1,10 @@
 #include "Enemy.h"
 
+void Enemy::DrawEnemyHUD(){
+	DrawRectangle(_enemyPosition.x - 15, _enemyPosition.y - 50, GetEnemyHealth(), 30, DARKBROWN);
+	DrawRectangle(_enemyPosition.x - 10, _enemyPosition.y - 45, GetEnemyHealth() - 10, 20, RED);
+}
+
 Enemy::Enemy(Vector2 enemyPosition, int health, int damage){
 	_enemyPosition = enemyPosition;
 	_health = health;
@@ -12,4 +17,12 @@ int Enemy::GetEnemyDamage(){
 
 void Enemy::DrawEnemy(){
 	DrawRectangle(_enemyPosition.x, _enemyPosition.y, 64, 64, RED);
+	DrawEnemyHUD();
 }
+
+int Enemy::GetEnemyHealth()
+{
+	return _health;
+}
+
+

@@ -1,9 +1,9 @@
 #include "Game.h"
 #include "Player.h"
 #include "Pugalo.h"
-#include "HUD.h"
 #include "Ground.h"
 #include "Door.h"
+#include "Enemy.h"
 
 Player player = Player({ 50.0f , 950.0f });
 
@@ -13,7 +13,9 @@ Ground mainGroundFloor = { { 0, 1000 } , 1920, 150, DARKGRAY };
 
 Door door = Door({1700, 900});
 
-extern GameScreen _currentScreen = MAIN_MENU;
+Enemy enemy = { { 1488.0f, 950.0f}, 100, 5 };
+
+extern GameScreen _currentScreen = LEVEL_2;
 
 extern Sound touchButton = LoadSound("Resources\\UseButton.mp3");
 
@@ -75,8 +77,14 @@ void DrawMap() {
         pugalo.Draw();
         door.DrawDoor();
         break;
+    case LEVEL_2:
+        mainGroundFloor.GroundDraw();
+        DrawText("LEVEL_2", 20, 20, 40, WHITE);
+        enemy.DrawEnemy();
+        break;
         EndDrawing();
     }
+
 }
 
 int GetCurrentMap() {
@@ -86,7 +94,6 @@ int GetCurrentMap() {
 void Update() {
     player.PlayerController();
     player.Draw();
-    DrawHUD(player);
 
     if (player.IsPlayerJump() && !player.PlayerMaxJump() && !player.GetPlayerCanJump()) {
         player.MoveVertically();

@@ -12,6 +12,11 @@ void Player::MissAttack(){
 	}
 }
 
+void Player::DrawHUD() {
+	DrawRectangle(15, 60, 210, 30, DARKBROWN);
+	DrawRectangle(20, 65, GetPlayerHealth() * 2, 20, RED);
+}
+
 Player::Player(Vector2 playerPosition) {
 	_playerPosition = playerPosition;
 }
@@ -37,6 +42,7 @@ int Player::GetPlayerHealth() {
 void Player::Draw() {
 	DrawRectangle(_playerPosition.x, _playerPosition.y, 64, 64, WHITE);
 	MissAttack();
+	DrawHUD();
 }
 
 void Player::PlayerController() {

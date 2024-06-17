@@ -132,7 +132,6 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Ground.cpp" />
-    <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Pugalo.cpp" />
   </ItemGroup>
@@ -140,7 +139,6 @@
     <ClInclude Include="Door.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Ground.h" />
-    <ClInclude Include="HUD.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Pugalo.h" />
   </ItemGroup>
