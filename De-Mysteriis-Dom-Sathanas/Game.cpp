@@ -15,7 +15,7 @@ Door door = Door({1700, 900});
 
 Enemy enemy = { { 1488.0f, 950.0f}, 100, 5 };
 
-extern GameScreen _currentScreen = LEVEL_2;
+extern GameScreen _currentScreen = MAIN_MENU;
 
 extern Sound touchButton = LoadSound("Resources\\UseButton.mp3");
 
