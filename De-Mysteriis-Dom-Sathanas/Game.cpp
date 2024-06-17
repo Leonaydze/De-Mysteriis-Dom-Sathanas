@@ -3,16 +3,25 @@
 #include "Pugalo.h"
 #include "HUD.h"
 #include "Ground.h"
+#include "Door.h"
 
-Player player = Player();
+Player player = Player({ 50.0f , 950.0f });
 
 Pugalo pugalo = Pugalo();
 
-Ground mainGroundFloor = { { 0, 0 } , GetMonitorWidth(GetCurrentMonitor()), GetMonitorHeight(GetCurrentMonitor()) + 10, WHITE };
+Ground mainGroundFloor = { { 0, 1000 } , 1920, 150, DARKGRAY };
+
+Door door = Door({1700, 900});
 
 extern GameScreen _currentScreen = MAIN_MENU;
 
 extern Sound touchButton = LoadSound("Resources\\UseButton.mp3");
+
+bool PlayerOnGround(Player& player, Ground& ground) {
+    player.SetPlayerCanJump(true);
+    return (player.GetPlayerPositionX() + 64 >= ground.GetGroundPositionX() && player.GetPlayerPositionX() <= ground.GetGroundPositionX() + ground.GetGroundWidth()
+        && player.GetPlayerPositionY() + 64 >= ground.GetGroundPositionY() && player.GetPlayerPositionY() <= ground.GetGroundPositionY() + ground.GetGroundHeight());
+}
 
 void PlayerCanWalk(Player player, Ground ground) {
     if (player.GetPlayerPositionX() >= ground.GetGroundPositionX() && player.GetPlayerPositionX() <= ground.GetGroundPositionX() + ground.GetGroundWidth()
@@ -38,7 +47,11 @@ void MapLogic() {
         }
         break;
     case LEVEL_1:
-        DrawHUD(player);
+        if (player.GetPlayerPositionX() + 64 >= door.DoorPositionX() && player.GetPlayerPositionX() - 64 <= door.DoorPositionX() + 128 &&
+            player.GetPlayerPositionY() + 64 >= door.DoorPositionY() && player.GetPlayerPositionY() <= door.DoorPositionY() + 128){
+            _currentScreen = LEVEL_2;
+            player.SetPlayerPosition({ 50.0f , 950.0f });
+        }
         break;
     }
 }
@@ -60,6 +73,7 @@ void DrawMap() {
         mainGroundFloor.GroundDraw();
         DrawText("LEVEL_1", 20, 20, 40, WHITE);
         pugalo.Draw();
+        door.DrawDoor();
         break;
         EndDrawing();
     }
@@ -72,18 +86,13 @@ int GetCurrentMap() {
 void Update() {
     player.PlayerController();
     player.Draw();
+    DrawHUD(player);
 
-    if (player.IsPlayerJump()) {
+    if (player.IsPlayerJump() && !player.PlayerMaxJump() && !player.GetPlayerCanJump()) {
         player.MoveVertically();
+    }
+    else if (!PlayerOnGround(player, mainGroundFloor)) {
+        player.MoveVerticallyDown();
         player.SetPlayerCanJump(false);
     }
-    if (player.PlayerMaxJump() && !player.GetPlayerCanJump() || (!player.IsPlayerJump() && player.GetJumpHeight() > 0)) {
-        player.SetPlayerJump(false);
-        player.MoveVerticallyDown();
-    }
-}
-
-bool PlayerOnGround(Player& player, Ground& ground) {
-    return (player.GetPlayerPositionX() >= ground.GetGroundPositionX() && player.GetPlayerPositionX() <= ground.GetGroundPositionX() + ground.GetGroundWidth()
-        && player.GetPlayerPositionY() >= ground.GetGroundPositionY() && player.GetPlayerPositionY() <= ground.GetGroundPositionY() + ground.GetGroundHeight());
 }

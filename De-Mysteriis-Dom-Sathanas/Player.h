@@ -1,14 +1,16 @@
 #pragma once
 #include <raylib.h>
+#include "random"
+#include <iostream>
 
 class Player {
 private:
-	int _health;
+	int _health = 100;
 
 	float _playerSpeed = 5;
-	Vector2 _playerVelocity{ 0.0f, 0.0f };
+	Vector2 _playerVelocity { 0.0f, 0.0f };
 
-	Vector2 _playerPosition{ 100.0f, 983.0f };
+	Vector2 _playerPosition { 0.0f, 0.0f };
 
 	float _jumpHeight = 0;
 	float _jumpMaxHeight = 150;
@@ -19,13 +21,18 @@ private:
 	bool _playerCanWalk = true;
 
 	Sound fallOnGround = LoadSound("Resources\\FallOnGround.mp3");
-public:
-	Player();
 
+	int _damage = 1;
+
+	void SetRandomDamage();
+
+	void MissAttack();
+public:
+	Player(Vector2 playerPosition);
+
+	void SetPlayerPosition(Vector2 playerPosition);
 	float GetPlayerPositionX();
 	float GetPlayerPositionY();
-
-	bool PlayerOnGround();
 
 	int GetPlayerHealth();
 
@@ -36,7 +43,6 @@ public:
 	bool IsPlayerJump();
 	float GetJumpHeight();
 	bool PlayerMaxJump();
-	void SetPlayerJump(bool playerJump);
 	void SetPlayerCanJump(bool playerCanJump);
 	bool GetPlayerCanJump();
 
@@ -47,5 +53,8 @@ public:
 	void SetBoolPlayerCanWalk(bool playerCanWalk);
 
 	Vector2 GetPlayerPosition();
+
+	int GetPlayerDamage();
+
 	~Player();
 };

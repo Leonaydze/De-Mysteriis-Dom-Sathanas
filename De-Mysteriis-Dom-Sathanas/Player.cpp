@@ -1,5 +1,25 @@
 #include "Player.h"
 
+void Player::SetRandomDamage()
+{
+	_damage = rand() % 30;
+	std::cout << _damage << std::endl;
+}
+
+void Player::MissAttack(){
+	if (_damage == 0) {
+		DrawText("Miss", _playerPosition.x + 100, _playerPosition.y - 100, 40, WHITE);
+	}
+}
+
+Player::Player(Vector2 playerPosition) {
+	_playerPosition = playerPosition;
+}
+
+void Player::SetPlayerPosition(Vector2 playerPosition){
+	_playerPosition = playerPosition;
+}
+
 float Player::GetPlayerPositionX()
 {
 	return _playerPosition.x;
@@ -10,25 +30,19 @@ float Player::GetPlayerPositionY()
 	return _playerPosition.y;
 }
 
-
-bool Player::PlayerOnGround() {
-	return (_playerPosition.y <= GetMonitorHeight(GetCurrentMonitor()) - 40);
-}
-
-Player::Player() {
-	_health = 100;
-	_jumpHeight = 0;
-}
-
 int Player::GetPlayerHealth() {
 	return _health;
 }
 
 void Player::Draw() {
 	DrawRectangle(_playerPosition.x, _playerPosition.y, 64, 64, WHITE);
+	MissAttack();
 }
 
 void Player::PlayerController() {
+	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+		SetRandomDamage();
+	}
 	if (IsKeyDown(KEY_D) && _playerPosition.x < GetMonitorWidth(GetCurrentMonitor()) - 64 && !IsKeyDown(KEY_A) && _playerCanWalk) {
 		_playerVelocity.x += _playerSpeed;
 		if (IsKeyDown(KEY_LEFT_SHIFT)) {
@@ -43,7 +57,7 @@ void Player::PlayerController() {
 		}
 		_playerPosition.x += _playerVelocity.x;
 	}
-	if (IsKeyPressed(KEY_SPACE) && PlayerOnGround() && !IsKeyPressedRepeat(KEY_SPACE) && _playerCanJump) {
+	if (IsKeyPressed(KEY_SPACE) && !IsKeyPressedRepeat(KEY_SPACE) && _playerCanJump) {
 		_playerJump = true;
 		_playerCanJump = false;
 		PlaySound(fallOnGround);
@@ -63,10 +77,6 @@ float Player::GetJumpHeight() {
 
 bool Player::PlayerMaxJump() {
 	return (_jumpHeight >= _jumpMaxHeight);
-}
-
-void Player::SetPlayerJump(bool playerJump) {
-	_playerJump = playerJump;
 }
 
 void Player::SetPlayerCanJump(bool playerCanJump) {
@@ -101,8 +111,11 @@ Vector2 Player::GetPlayerPosition() {
 	return _playerPosition;
 }
 
+int Player::GetPlayerDamage()
+{
+	return _damage;
+}
+
 Player::~Player() {
 	UnloadSound(fallOnGround);
 }
-
-
