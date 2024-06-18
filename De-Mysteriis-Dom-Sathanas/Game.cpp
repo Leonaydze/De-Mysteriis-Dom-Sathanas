@@ -6,6 +6,7 @@
 #include "Enemy.h"
 
 Player player = Player({ 50.0f , 950.0f });
+Camera2D _playerCamera;
 
 Pugalo pugalo = Pugalo();
 
@@ -15,7 +16,7 @@ Door door = Door({1700, 900});
 
 Enemy enemy = { { 1488.0f, 950.0f}, 100, 5 };
 
-extern GameScreen _currentScreen = MAIN_MENU;
+extern GameScreen _currentScreen = LEVEL_1;
 
 extern Sound touchButton = LoadSound("Resources\\UseButton.mp3");
 
@@ -37,6 +38,7 @@ void PlayerCanWalk(Player player, Ground ground) {
 
 
 void MapLogic() {
+
     switch (_currentScreen)
     {
     case MAIN_MENU:
@@ -49,6 +51,10 @@ void MapLogic() {
         }
         break;
     case LEVEL_1:
+        _playerCamera.target = player.GetPlayerPosition();
+        _playerCamera.offset = { 1920.0f / 2.0f, 1080.0f / 2.0f };
+        _playerCamera.zoom = 1.0f;
+        _playerCamera.rotation = 0.0f;
         if (player.GetPlayerPositionX() + 64 >= door.DoorPositionX() && player.GetPlayerPositionX() - 64 <= door.DoorPositionX() + 128 &&
             player.GetPlayerPositionY() + 64 >= door.DoorPositionY() && player.GetPlayerPositionY() <= door.DoorPositionY() + 128){
             _currentScreen = LEVEL_2;
@@ -61,7 +67,6 @@ void MapLogic() {
 
 void DrawMap() {
     BeginDrawing();
-
     ClearBackground(BLACK);
 
     switch (_currentScreen)
@@ -72,6 +77,7 @@ void DrawMap() {
         DrawText("Play", GetScreenWidth() / 2 - 40, GetScreenHeight() / 2 - 20, 40, BLACK);
         break;
     case LEVEL_1:
+        BeginMode2D(_playerCamera);
         mainGroundFloor.GroundDraw();
         DrawText("LEVEL_1", 20, 20, 40, WHITE);
         pugalo.Draw();
@@ -83,6 +89,7 @@ void DrawMap() {
         enemy.DrawEnemy();
         break;
         EndDrawing();
+        EndMode2D();
     }
 
 }
