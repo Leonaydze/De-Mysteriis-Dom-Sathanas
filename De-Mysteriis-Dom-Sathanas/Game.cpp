@@ -4,13 +4,15 @@
 #include "Ground.h"
 #include "Door.h"
 #include "Enemy.h"
+#include "CustomColors.h"
 
 Player player = Player({ 50.0f , 950.0f });
 Camera2D _playerCamera;
 
 Pugalo pugalo = Pugalo();
 
-Ground mainGroundFloor = { { 0, 1000 } , 1920, 150, DARKGRAY };
+Ground mainGroundFloor = { { 0, 1000 } , 1920, 150, darkGrey };
+Ground leftBorder = { {-1000.0f, 0.0f}, 2000, 5000, DARKGRAY };
 
 Door door = Door({1700, 900});
 
@@ -38,6 +40,10 @@ void PlayerCanWalk(Player player, Ground ground) {
 
 
 void MapLogic() {
+    _playerCamera.target = player.GetPlayerPosition();
+    _playerCamera.offset = { 1920.0f / 2.0f, 1080.0f / 2.0f };
+    _playerCamera.zoom = 1.0f;
+    _playerCamera.rotation = 0.0f;
 
     switch (_currentScreen)
     {
@@ -51,16 +57,13 @@ void MapLogic() {
         }
         break;
     case LEVEL_1:
-        _playerCamera.target = player.GetPlayerPosition();
-        _playerCamera.offset = { 1920.0f / 2.0f, 1080.0f / 2.0f };
-        _playerCamera.zoom = 1.0f;
-        _playerCamera.rotation = 0.0f;
         if (player.GetPlayerPositionX() + 64 >= door.DoorPositionX() && player.GetPlayerPositionX() - 64 <= door.DoorPositionX() + 128 &&
             player.GetPlayerPositionY() + 64 >= door.DoorPositionY() && player.GetPlayerPositionY() <= door.DoorPositionY() + 128){
             _currentScreen = LEVEL_2;
             player.SetPlayerPosition({ 50.0f , 950.0f });
         }
         break;
+        
     }
 }
 
@@ -68,6 +71,7 @@ void MapLogic() {
 void DrawMap() {
     BeginDrawing();
     ClearBackground(BLACK);
+    BeginMode2D(_playerCamera);
 
     switch (_currentScreen)
     {
@@ -77,8 +81,8 @@ void DrawMap() {
         DrawText("Play", GetScreenWidth() / 2 - 40, GetScreenHeight() / 2 - 20, 40, BLACK);
         break;
     case LEVEL_1:
-        BeginMode2D(_playerCamera);
         mainGroundFloor.GroundDraw();
+        leftBorder.GroundDraw();
         DrawText("LEVEL_1", 20, 20, 40, WHITE);
         pugalo.Draw();
         door.DrawDoor();

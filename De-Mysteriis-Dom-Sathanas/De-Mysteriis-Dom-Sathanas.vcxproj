@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CustomColors.cpp" />
     <ClCompile Include="De-Mysteriis-Dom-Sathanas.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -136,6 +137,7 @@
     <ClCompile Include="Pugalo.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CustomColors.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Ground.h" />

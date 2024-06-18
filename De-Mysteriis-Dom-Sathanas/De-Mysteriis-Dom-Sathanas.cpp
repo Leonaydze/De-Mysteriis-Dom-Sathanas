@@ -31,14 +31,15 @@ int main()
 		BeginDrawing();
 		ClearBackground(DARKGRAY);
 
+
 		if (exitWindowRequested)
 			{
-				DrawRectangle(GetMonitorWidth(GetCurrentMonitor()) / 2 - 360, GetMonitorHeight(GetCurrentMonitor()) / 2 - 20, 750, 50, WHITE);
-				DrawText("Are you sure you want to quit the game? [Y/N]", GetMonitorWidth(GetCurrentMonitor()) / 2 - 350, GetMonitorHeight(GetCurrentMonitor()) / 2 - 10, 30, BLACK);
+				DrawRectangle(GetMonitorWidth(GetCurrentMonitor()) / 2 - 360, GetMonitorHeight(GetCurrentMonitor()) / 2 - 80, 750, 50, WHITE);
+				DrawText("Are you sure you want to quit the game? [Y/N]", GetMonitorWidth(GetCurrentMonitor()) / 2 - 350 , GetMonitorHeight(GetCurrentMonitor()) / 2 - 70, 30, BLACK);
 			}
-		
-		MapLogic();
+
 		DrawMap();
+		MapLogic();
 
 		if (GetCurrentMap() != 0 && GetCurrentMap() != 1 ) {
 			Update();
