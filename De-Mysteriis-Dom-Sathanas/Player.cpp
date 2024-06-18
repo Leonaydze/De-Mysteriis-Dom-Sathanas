@@ -59,9 +59,9 @@ void Player::PlayerController() {
 		if (IsKeyDown(KEY_LEFT_SHIFT)) {
 			_playerVelocity.x *= 1.5;
 		}
-		if (_playerTexture.width < 0) {
+	/*	if (_playerTexture.width < 0) {
 			_playerTexture.width = -_playerTexture.width;
-		}
+		}*/
 		_playerPosition.x += _playerVelocity.x;
 	}
 	if (IsKeyDown(KEY_A) && _playerPosition.x > 0 && !IsKeyDown(KEY_D) && _playerCanWalk) {
@@ -69,9 +69,9 @@ void Player::PlayerController() {
 		if (IsKeyDown(KEY_LEFT_SHIFT)) {
 			_playerVelocity.x *= 1.5;
 		}
-		if (_playerTexture.width > 0) {
+		/*if (_playerTexture.width > 0) {
 			_playerTexture.width = -_playerTexture.width;
-		}
+		}*/
 		_playerPosition.x += _playerVelocity.x;
 	}
 	if (IsKeyPressed(KEY_SPACE) && !IsKeyPressedRepeat(KEY_SPACE) && _playerCanJump) {
