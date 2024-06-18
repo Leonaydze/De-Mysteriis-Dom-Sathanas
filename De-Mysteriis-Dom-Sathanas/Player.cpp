@@ -70,7 +70,7 @@ void Player::PlayerController() {
 			_playerVelocity.x *= 1.5;
 		}
 		if (_playerTexture.width > 0) {
-			_playerTexture.width = -_playerTexture.width * 2;
+			_playerTexture.width = -_playerTexture.width;
 		}
 		_playerPosition.x += _playerVelocity.x;
 	}
