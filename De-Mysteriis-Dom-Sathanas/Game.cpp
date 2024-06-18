@@ -12,7 +12,7 @@ Camera2D _playerCamera;
 Pugalo pugalo = Pugalo({ 2500.0f, 930.0f});
 
 Ground mainGroundFloor = { { 0, 1000 } , 2920, 150, darkGrey };
-Ground leftBorder = { {-1000.0f, 0.0f}, 1900, 5000, DARKGRAY };
+Ground leftBorder = { {-1000.0f, 0.0f}, 2000, 5000, DARKGRAY };
 
 Door door = Door({2700, 900});
 
