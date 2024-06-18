@@ -59,14 +59,9 @@
     <ClInclude Include="CustomColors.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="Resources\FallOnGround.mp3">
-      <Filter>Файлы ресурсов</Filter>
-    </Media>
-    <Media Include="Resources\UseButton.mp3">
-      <Filter>Файлы ресурсов</Filter>
-    </Media>
+    <ClInclude Include="Game.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\PlayerText.png">

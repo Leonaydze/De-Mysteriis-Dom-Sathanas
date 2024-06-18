@@ -2,7 +2,7 @@
 
 void Player::SetRandomDamage()
 {
-	_damage = rand() % 30;
+	_damage = rand() % 2;
 	std::cout << _damage << std::endl;
 }
 
@@ -13,12 +13,16 @@ void Player::MissAttack(){
 }
 
 void Player::DrawHUD() {
-	DrawRectangle(15, 60, 210, 30, DARKBROWN);
-	DrawRectangle(20, 65, GetPlayerHealth() * 2, 20, RED);
+	DrawRectangle(_playerPosition.x - 900, _playerPosition.y - 650, 210, 30, DARKBROWN);
+	DrawRectangle(_playerPosition.x - 895, _playerPosition.y - 645, GetPlayerHealth() * 2, 20, RED);
+}
+
+Player::Player() {
 }
 
 Player::Player(Vector2 playerPosition) {
 	_playerPosition = playerPosition;
+	_playerTexture = LoadTexture("Resources\\PlayerText.png");
 }
 
 void Player::SetPlayerPosition(Vector2 playerPosition){
@@ -40,7 +44,8 @@ int Player::GetPlayerHealth() {
 }
 
 void Player::Draw() {
-	DrawRectangle(_playerPosition.x, _playerPosition.y, 64, 64, WHITE);
+	DrawTexture(_playerTexture, _playerPosition.x, _playerPosition.y, DARKBLUE);
+	//DrawRectangle(_playerPosition.x, _playerPosition.y, 64, 64, WHITE);
 	MissAttack();
 	DrawHUD();
 }
@@ -59,6 +64,7 @@ void Player::PlayerController() {
 	if (IsKeyDown(KEY_A) && _playerPosition.x > 0 && !IsKeyDown(KEY_D) && _playerCanWalk) {
 		_playerVelocity.x -= _playerSpeed;
 		if (IsKeyDown(KEY_LEFT_SHIFT)) {
+			;
 			_playerVelocity.x *= 1.5;
 		}
 		_playerPosition.x += _playerVelocity.x;
@@ -66,7 +72,6 @@ void Player::PlayerController() {
 	if (IsKeyPressed(KEY_SPACE) && !IsKeyPressedRepeat(KEY_SPACE) && _playerCanJump) {
 		_playerJump = true;
 		_playerCanJump = false;
-		PlaySound(fallOnGround);
 	}
 
 	_playerVelocity.y = 0;
@@ -123,5 +128,5 @@ int Player::GetPlayerDamage()
 }
 
 Player::~Player() {
-	UnloadSound(fallOnGround);
+	UnloadTexture(_playerTexture);
 }

@@ -1,5 +1,9 @@
 #include "Door.h"
 
+Door::Door() {
+	
+}
+
 Door::Door(Vector2 doorPosition){
 	_doorPosition = doorPosition;
 }

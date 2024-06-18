@@ -1,5 +1,9 @@
 #include "Enemy.h"
 
+Enemy::Enemy() {
+
+}
+
 void Enemy::DrawEnemyHUD(){
 	DrawRectangle(_enemyPosition.x - 15, _enemyPosition.y - 50, GetEnemyHealth(), 30, DARKBROWN);
 	DrawRectangle(_enemyPosition.x - 10, _enemyPosition.y - 45, GetEnemyHealth() - 10, 20, RED);

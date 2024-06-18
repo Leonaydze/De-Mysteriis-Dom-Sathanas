@@ -1,11 +1,13 @@
 #include <iostream>
-#include "Game.h"
+#include "Game.h";
 
 int main()
 {
 	InitWindow(GetMonitorWidth(GetCurrentMonitor()), GetMonitorHeight(GetCurrentMonitor()), "AAA");
 
 	InitAudioDevice();
+
+	Init();
 
 	SetExitKey(KEY_NULL);       // Disable KEY_ESCAPE to close window, X-button still works
 	

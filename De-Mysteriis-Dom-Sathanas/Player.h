@@ -20,8 +20,6 @@ private:
 	bool _playerJump = false;
 	bool _playerCanWalk = true;
 
-	Sound fallOnGround = LoadSound("Resources\\FallOnGround.mp3");
-
 	int _damage = 1;
 
 	void SetRandomDamage();
@@ -29,7 +27,10 @@ private:
 	void MissAttack();
 	void DrawHUD();
 
+	Texture2D _playerTexture;
 public:
+	Player();
+
 	Player(Vector2 playerPosition);
 
 	void SetPlayerPosition(Vector2 playerPosition);

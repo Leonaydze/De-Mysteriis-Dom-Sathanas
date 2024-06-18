@@ -140,13 +140,10 @@
     <ClInclude Include="CustomColors.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Pugalo.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="Resources\FallOnGround.mp3" />
-    <Media Include="Resources\UseButton.mp3" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\PlayerText.png" />

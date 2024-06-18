@@ -6,21 +6,35 @@
 #include "Enemy.h"
 #include "CustomColors.h"
 
-Player player = Player({ 50.0f , 950.0f });
+Player player;
+
 Camera2D _playerCamera;
 
-Pugalo pugalo = Pugalo({ 2500.0f, 930.0f});
+Pugalo pugalo;
 
-Ground mainGroundFloor = { { 0, 1000 } , 2920, 150, darkGrey };
-Ground leftBorder = { {-1000.0f, 0.0f}, 2000, 5000, DARKGRAY };
+Ground mainGroundFloor;
+Ground leftBorder;
 
-Door door = Door({2700, 900});
+Door door;
 
-Enemy enemy = { { 1488.0f, 950.0f}, 100, 5 };
+Enemy enemy;
 
-extern GameScreen _currentScreen = LEVEL_1;
+void Init() {
+    player = Player({ 50.0f , 950.0f });
 
-extern Sound touchButton = LoadSound("Resources\\UseButton.mp3");
+    _playerCamera;
+
+    pugalo = Pugalo({ 2500.0f, 930.0f});
+
+    mainGroundFloor = { { 0, 1000 } , 2920, 150, darkGrey };
+    leftBorder = { {-1000.0f, 0.0f}, 2000, 5000, DARKGRAY };
+
+    door = Door({2700, 900});
+
+    enemy = { { 1488.0f, 950.0f}, 100, 5 };
+}
+
+extern GameScreen _currentScreen = MAIN_MENU;
 
 bool PlayerOnGround(Player& player, Ground& ground) {
     player.SetPlayerCanJump(true);
@@ -38,9 +52,8 @@ void PlayerCanWalk(Player player, Ground ground) {
     }
 }
 
-
 void MapLogic() {
-    _playerCamera.target = player.GetPlayerPosition();
+    _playerCamera.target = {player.GetPlayerPositionX(), player.GetPlayerPositionY() - 200};
     _playerCamera.offset = { 1920.0f / 2.0f, 1080.0f / 2.0f };
     _playerCamera.zoom = 1.0f;
     _playerCamera.rotation = 0.0f;
@@ -51,9 +64,7 @@ void MapLogic() {
         if ((GetMouseX() >= GetScreenWidth() / 2 - 50 && GetMouseX() <= GetScreenWidth() / 2 + 50)
             && (GetMouseY() >= GetScreenHeight() / 2 - 25 && GetMouseY() <= GetScreenHeight() / 2 + 25)
             && (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))) {
-            PlaySound(touchButton);
             _currentScreen = LEVEL_1;
-            UnloadSound(touchButton);
         }
         break;
     case LEVEL_1:
@@ -71,7 +82,6 @@ void MapLogic() {
 void DrawMap() {
     BeginDrawing();
     ClearBackground(BLACK);
-    BeginMode2D(_playerCamera);
 
     switch (_currentScreen)
     {
@@ -81,21 +91,22 @@ void DrawMap() {
         DrawText("Play", GetScreenWidth() / 2 - 40, GetScreenHeight() / 2 - 20, 40, BLACK);
         break;
     case LEVEL_1:
+        BeginMode2D(_playerCamera);
         mainGroundFloor.GroundDraw();
         leftBorder.GroundDraw();
-        DrawText("LEVEL_1", 20, 20, 40, WHITE);
+        DrawText("LEVEL_1", player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700, 40, WHITE);
         pugalo.Draw();
         door.DrawDoor();
         break;
     case LEVEL_2:
+        BeginMode2D(_playerCamera);
         mainGroundFloor.GroundDraw();
-        DrawText("LEVEL_2", 20, 20, 40, WHITE);
+        DrawText("LEVEL_2", player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700, 40, WHITE);
         enemy.DrawEnemy();
         break;
-        EndDrawing();
         EndMode2D();
+        EndDrawing();
     }
-
 }
 
 int GetCurrentMap() {

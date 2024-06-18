@@ -5,6 +5,7 @@ class Door{
 private:
 	Vector2 _doorPosition;
 public:
+	Door();
 
 	Door(Vector2 doorPosition);
 

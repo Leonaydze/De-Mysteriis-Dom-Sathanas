@@ -11,6 +11,8 @@ private:
 
 	void DrawEnemyHUD();
 public:
+	Enemy();
+
 	Enemy(Vector2 enemyPosition, int health, int damage);
 
 	int GetEnemyDamage();
