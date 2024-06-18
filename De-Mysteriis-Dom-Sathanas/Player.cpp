@@ -44,7 +44,7 @@ int Player::GetPlayerHealth() {
 }
 
 void Player::Draw() {
-	DrawTexture(_playerTexture, _playerPosition.x, _playerPosition.y, DARKBLUE);
+	DrawTexture(_playerTexture, _playerPosition.x, _playerPosition.y, WHITE);
 	//DrawRectangle(_playerPosition.x, _playerPosition.y, 64, 64, WHITE);
 	MissAttack();
 	DrawHUD();
@@ -59,13 +59,18 @@ void Player::PlayerController() {
 		if (IsKeyDown(KEY_LEFT_SHIFT)) {
 			_playerVelocity.x *= 1.5;
 		}
+		if (_playerTexture.width < 0) {
+			_playerTexture.width = -_playerTexture.width;
+		}
 		_playerPosition.x += _playerVelocity.x;
 	}
 	if (IsKeyDown(KEY_A) && _playerPosition.x > 0 && !IsKeyDown(KEY_D) && _playerCanWalk) {
 		_playerVelocity.x -= _playerSpeed;
 		if (IsKeyDown(KEY_LEFT_SHIFT)) {
-			;
 			_playerVelocity.x *= 1.5;
+		}
+		if (_playerTexture.width > 0) {
+			_playerTexture.width = -_playerTexture.width * 2;
 		}
 		_playerPosition.x += _playerVelocity.x;
 	}
@@ -125,8 +130,4 @@ Vector2 Player::GetPlayerPosition() {
 int Player::GetPlayerDamage()
 {
 	return _damage;
-}
-
-Player::~Player() {
-	UnloadTexture(_playerTexture);
 }

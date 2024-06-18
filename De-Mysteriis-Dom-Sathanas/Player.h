@@ -58,6 +58,4 @@ public:
 	Vector2 GetPlayerPosition();
 
 	int GetPlayerDamage();
-
-	~Player();
 };
