@@ -17,3 +17,7 @@ void Pugalo::Draw(){
 Pugalo::Pugalo() {
 
 }
+
+Pugalo::Pugalo(Vector2 pugaloPosition){
+	_pugaloPosition = pugaloPosition;
+}
