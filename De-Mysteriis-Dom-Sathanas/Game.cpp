@@ -34,7 +34,18 @@ void Init() {
     enemy = { { 1488.0f, 950.0f}, 100, 5 };
 }
 
-extern GameScreen _currentScreen = MAIN_MENU;
+void EnemyIsLookingForAPlayer(Player& player, Enemy& enemy) {
+    if (player.GetPlayerPositionX() + 64 >= enemy.GetEnemyPositionX() - 250
+        && player.GetPlayerPositionX() + 64 <= enemy.GetEnemyPositionX() + 32) {
+        enemy.EnemyMoveX(-4.0f);
+    }
+    if (player.GetPlayerPositionX() + 64 <= enemy.GetEnemyPositionX() + 250
+        && player.GetPlayerPositionX() + 64 >= enemy.GetEnemyPositionX() - 32) {
+        enemy.EnemyMoveX(4.0f);
+    }
+}
+
+extern GameScreen _currentScreen = LEVEL_2;
 
 bool PlayerOnGround(Player& player, Ground& ground) {
     player.SetPlayerCanJump(true);
@@ -74,7 +85,8 @@ void MapLogic() {
             player.SetPlayerPosition({ 50.0f , 950.0f });
         }
         break;
-        
+    case LEVEL_2:
+        EnemyIsLookingForAPlayer(player, enemy);
     }
 }
 

@@ -1,7 +1,7 @@
 #pragma once
 #include "raylib.h"
 
-class Enemy{
+class Enemy {
 private:
 	int _health;
 
@@ -20,5 +20,9 @@ public:
 	void DrawEnemy();
 
 	int GetEnemyHealth();
+
+	float GetEnemyPositionX();
+
+	void EnemyMoveX(float coef);
 };
 
