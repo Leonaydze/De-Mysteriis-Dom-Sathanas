@@ -13,8 +13,8 @@ private:
 	Vector2 _playerPosition { 0.0f, 0.0f };
 
 	float _jumpHeight = 0;
-	float _jumpMaxHeight = 150;
-	float _playerJumpSpeed = 5.5f;
+	float _jumpMaxHeight = 200;
+	float _playerJumpSpeed = 6.5f;
 
 	bool _playerCanJump = true;
 	bool _playerJump = false;

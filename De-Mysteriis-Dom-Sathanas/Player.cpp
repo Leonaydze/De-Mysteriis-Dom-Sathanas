@@ -118,7 +118,7 @@ void Player::MoveVertically() {
 void Player::MoveVerticallyDown() {
 	_jumpHeight = 0;
 	_playerPosition.y += _playerJumpSpeed;
-	if (_playerJumpSpeed <= 5.5f)
+	if (_playerJumpSpeed <= 6.5f)
 		_playerJumpSpeed += 0.3f;
 }
 
