@@ -19,7 +19,7 @@ Pugalo pugalo;
 Ground mainGroundFloor;
 Ground leftBorder;
 
-Ground platform;
+Ground platform, platform_2;
 
 Door door;
 
@@ -54,34 +54,29 @@ void Init() {
     enemy_lv2 = { { 1488.0f , 950.0f }, 100, 15 };
 
     platform = { { 400 , 900 }, 256, 32, DARKGRAY };
-    enemy_lv3 = { { 400 , 820 }, 100, 5 };
-}
+    enemy_lv3 = { { 420 , 820 }, 100, 10 };
 
-bool EnemyIsLookingForAPlayerLeft(Enemy &enemy) {
-    return (player.GetPlayerPositionX() + 64 >= enemy.GetEnemyPositionX() - 250
-        && player.GetPlayerPositionX() + 32 <= enemy.GetEnemyPositionX() + 32);
-}
-
-bool EnemyIsLookingForAPlayerRight(Enemy& enemy) {
-    return (player.GetPlayerPositionX() + 64 <= enemy.GetEnemyPositionX() + 250
-        && player.GetPlayerPositionX() >= enemy.GetEnemyPositionX() + 32);
+    platform_2 = { { 700 , 800 }, 256, 32, DARKGRAY };
+    enemy_lv3_2 = { { 700 , 740 }, 100, 10 };
 }
 
 void EnemyGoesToThePlayer(Enemy &enemy) {
-    if (EnemyIsLookingForAPlayerLeft(enemy) && enemy.GetEnemyHealth() > 0) {
+    if (player.GetPlayerPositionX() + 64 >= enemy.GetEnemyPositionX() - 250
+        && player.GetPlayerPositionX() + 32 <= enemy.GetEnemyPositionX() + 32 && enemy.GetEnemyHealth() > 0) {
         enemy.EnemyMoveX(-5.5f);
     }
-    if (EnemyIsLookingForAPlayerRight(enemy) && enemy.GetEnemyHealth() > 0) {
+    if (player.GetPlayerPositionX() + 64 <= enemy.GetEnemyPositionX() + 250
+        && player.GetPlayerPositionX() >= enemy.GetEnemyPositionX() + 32 && enemy.GetEnemyHealth() > 0) {
         enemy.EnemyMoveX(5.5f);
     }
 }
 
 void EnemyAttacksThePlayer(Enemy &enemy) {
-    if (enemy.GetEnemyHealth() > 0 && EnemyIsLookingForAPlayerLeft(enemy)
+    if (enemy.GetEnemyHealth() > 0
         && player.GetPlayerPositionX() + 64 >= enemy_lv2.GetEnemyPositionX() - 100
         && player.GetPlayerPositionX() <= enemy.GetEnemyPositionX() + 164
-        && player.GetPlayerPositionY() >= enemy.GetEnemyPositionY() - 20
-        && player. GetPlayerPositionY() + 64 <= enemy.GetEnemyPositionY() + 84){
+        && player.GetPlayerPositionY() >= enemy.GetEnemyPositionY() - 40
+        && player. GetPlayerPositionY() + 64 <= enemy.GetEnemyPositionY() + 104){
         if (EventTriggered(1.0f)) {
             player.PlayerTakesDamageFromTheEnemy(enemy.GetEnemyDamage());
         }
@@ -91,9 +86,9 @@ void EnemyAttacksThePlayer(Enemy &enemy) {
 void PlayerAttacksEnemy(Enemy &enemy) {
     if (player.GetPlayerPositionX() + 64 >= enemy.GetEnemyPositionX() - 70
         && player.GetPlayerPositionX() <= enemy.GetEnemyPositionX() + 134
-        && player.GetPlayerPositionY() >= enemy.GetEnemyPositionY() - 20
-        && player.GetPlayerPositionY() + 64 <= enemy.GetEnemyPositionY() + 84) {
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && EventTriggered(1.0f)) {
+        && player.GetPlayerPositionY() >= enemy.GetEnemyPositionY() - 40
+        && player.GetPlayerPositionY() + 64 <= enemy.GetEnemyPositionY() + 104) {
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && EventTriggered(0.5f)) {
             enemy.EnemyTakesDamageFromThePlayer(player.GetPlayerDamage());
         }
     }
@@ -157,6 +152,9 @@ void MapLogic() {
         EnemyGoesToThePlayer(enemy_lv3);
         EnemyAttacksThePlayer(enemy_lv3);
         PlayerAttacksEnemy(enemy_lv3);
+        EnemyGoesToThePlayer(enemy_lv3_2);
+        EnemyAttacksThePlayer(enemy_lv3_2);
+        PlayerAttacksEnemy(enemy_lv3_2);
         break;
     }
 }
@@ -194,7 +192,9 @@ void DrawMap() {
         leftBorder.GroundDraw();
         DrawTextEx(font, "LEVEL_3", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
         platform.GroundDraw();
+        platform_2.GroundDraw();
         enemy_lv3.DrawEnemy();
+        enemy_lv3_2.DrawEnemy();
         break;
         EndMode2D();
         EndDrawing();
@@ -226,6 +226,11 @@ void Update() {
     if (!EnemyOnGround(enemy_lv3, platform)) {
         if (!EnemyOnGround(enemy_lv3, mainGroundFloor)) {
             enemy_lv3.EnemyMoveVerticallyDown();
+        }
+    }
+    if (!EnemyOnGround(enemy_lv3_2, platform_2)) {
+        if (!EnemyOnGround(enemy_lv3_2, mainGroundFloor)) {
+            enemy_lv3_2.EnemyMoveVerticallyDown();
         }
     }
 
