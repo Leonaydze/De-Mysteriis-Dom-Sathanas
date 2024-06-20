@@ -130,6 +130,10 @@ void MapLogic() {
         EnemyGoesToThePlayer(enemy);
         EnemyAttacksThePlayer(enemy);
         PlayerAttacksEnemy(enemy);
+        if (player.GetPlayerPositionX() + 64 >= door.DoorPositionX() && player.GetPlayerPositionX() - 64 <= door.DoorPositionX() + 128 &&
+            player.GetPlayerPositionY() + 64 >= door.DoorPositionY() && player.GetPlayerPositionY() <= door.DoorPositionY() + 128) {
+            player.PlayerTakesDamageFromTheEnemy(-(100 - player.GetPlayerHealth()));
+        }
     }
 }
 
@@ -158,6 +162,7 @@ void DrawMap() {
         mainGroundFloor.GroundDraw();
         DrawText("LEVEL_2", player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700, 40, WHITE);
         enemy.DrawEnemy();
+        door.DrawDoor();
         break;
         EndMode2D();
         EndDrawing();
