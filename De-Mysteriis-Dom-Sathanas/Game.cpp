@@ -41,6 +41,7 @@ void Init() {
     pugalo = Pugalo({ 2500.0f, 930.0f});
 
     mainGroundFloor = { { 0, 1000 } , 2920, 150, darkGrey };
+
     leftBorder = { {-1000.0f, 0.0f}, 2000, 5000, DARKGRAY };
 
     door = Door({2700, 900});
