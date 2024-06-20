@@ -59,6 +59,4 @@ public:
 
 	int GetPlayerDamage();
 	void PlayerTakesDamageFromTheEnemy(int damage);
-
-	bool PlayerDeath();
 };
