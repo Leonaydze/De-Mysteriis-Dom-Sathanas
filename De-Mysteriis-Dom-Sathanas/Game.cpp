@@ -70,14 +70,7 @@ void EnemyGoesToThePlayer(Enemy &enemy) {
 void EnemyAttacksThePlayer(Enemy &enemy) {
     if (enemy.GetEnemyHealth() > 0 && EnemyIsLookingForAPLayerLeft() 
         && player.GetPlayerPositionX() + 64 >= enemy.GetEnemyPositionX() - 100
-        && player.GetPlayerPositionX() + 32 <= enemy.GetEnemyPositionX() + 32){
-        if (EventTriggered(1)) {
-            player.PlayerTakesDamageFromTheEnemy(enemy.GetEnemyDamage());
-        }
-    }
-    if (enemy.GetEnemyHealth() > 0 && EnemyIsLookingForAPLayerRight() 
-        && player.GetPlayerPositionX() + 64 <= enemy.GetEnemyPositionX() + 100
-        && player.GetPlayerPositionX() >= enemy.GetEnemyPositionX() + 32){
+        && player.GetPlayerPositionX() <= enemy.GetEnemyPositionX() + 164){
         if (EventTriggered(1)) {
             player.PlayerTakesDamageFromTheEnemy(enemy.GetEnemyDamage());
         }
@@ -85,17 +78,12 @@ void EnemyAttacksThePlayer(Enemy &enemy) {
 }
 
 void PlayerAttacksEnemy(Enemy &enemy) {
-    if (player.GetPlayerPositionX() + 64 >= enemy.GetEnemyPositionX() + 32 - 70
-        && player.GetPlayerPositionX() + 32 <= enemy.GetEnemyPositionX() + 32) {
-        if (EventTriggered(0.5f)) {
-            enemy.EnemyTakesDamageFromThePlayer(player.GetPlayerDamage());
-        }
-    }
-    if (player.GetPlayerPositionY() + 64 <= enemy.GetEnemyPositionY()
-        && player.GetPlayerPositionX() + 64 <= enemy.GetEnemyPositionX() + 32 + 70
-        && player.GetPlayerPositionX() + 32 >= enemy.GetEnemyPositionX() + 32) {
-        if (EventTriggered(0.5f)) {
-            enemy.EnemyTakesDamageFromThePlayer(player.GetPlayerDamage());
+    if (player.GetPlayerPositionX() + 64 >= enemy.GetEnemyPositionX() - 70
+        && player.GetPlayerPositionX() <= enemy.GetEnemyPositionX() + 134) {
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+            if (EventTriggered(1.0f)) {
+                enemy.EnemyTakesDamageFromThePlayer(player.GetPlayerDamage());
+            }
         }
     }
 }
