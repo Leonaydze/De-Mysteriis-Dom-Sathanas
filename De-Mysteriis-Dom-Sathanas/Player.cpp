@@ -2,7 +2,7 @@
 
 void Player::SetRandomDamage()
 {
-	_damage = rand() % 2;
+	_damage = rand() % 30;
 	std::cout << _damage << std::endl;
 }
 
@@ -54,7 +54,7 @@ void Player::PlayerController() {
 	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 		SetRandomDamage();
 	}
-	if (IsKeyDown(KEY_D) && _playerPosition.x < GetMonitorWidth(GetCurrentMonitor()) + 1000 && !IsKeyDown(KEY_A) && _playerCanWalk) {
+	if (IsKeyDown(KEY_D) && _health > 0 && _playerPosition.x < GetMonitorWidth(GetCurrentMonitor()) + 1000 && !IsKeyDown(KEY_A) && _playerCanWalk) {
 		_playerVelocity.x += _playerSpeed;
 		if (IsKeyDown(KEY_LEFT_SHIFT)) {
 			_playerVelocity.x *= 1.5;
@@ -64,7 +64,7 @@ void Player::PlayerController() {
 		}*/
 		_playerPosition.x += _playerVelocity.x;
 	}
-	if (IsKeyDown(KEY_A) && _playerPosition.x > 0 && !IsKeyDown(KEY_D) && _playerCanWalk) {
+	if (IsKeyDown(KEY_A) && _health > 0 && _playerPosition.x > 0 && !IsKeyDown(KEY_D) && _playerCanWalk) {
 		_playerVelocity.x -= _playerSpeed;
 		if (IsKeyDown(KEY_LEFT_SHIFT)) {
 			_playerVelocity.x *= 1.5;
@@ -74,7 +74,7 @@ void Player::PlayerController() {
 		}*/
 		_playerPosition.x += _playerVelocity.x;
 	}
-	if (IsKeyPressed(KEY_SPACE) && !IsKeyPressedRepeat(KEY_SPACE) && _playerCanJump) {
+	if (IsKeyPressed(KEY_SPACE) && _health > 0 && !IsKeyPressedRepeat(KEY_SPACE) && _playerCanJump) {
 		_playerJump = true;
 		_playerCanJump = false;
 	}
@@ -130,4 +130,9 @@ Vector2 Player::GetPlayerPosition() {
 int Player::GetPlayerDamage()
 {
 	return _damage;
+}
+
+void Player::PlayerTakesDamageFromTheEnemy(int damage){
+	_damage -= damage;
+	_health += _damage;
 }

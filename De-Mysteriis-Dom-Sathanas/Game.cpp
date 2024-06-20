@@ -5,9 +5,9 @@
 #include "Door.h"
 #include "Enemy.h"
 #include "CustomColors.h"
+#include <ctime>
 
 Player player;
-
 Camera2D _playerCamera;
 
 Pugalo pugalo;
@@ -18,6 +18,18 @@ Ground leftBorder;
 Door door;
 
 Enemy enemy;
+
+double lastUpdateTime = 0;
+bool EventTriggered(double interval)
+{
+    double currentTime = GetTime();
+    if (currentTime - lastUpdateTime >= interval)
+    {
+        lastUpdateTime = currentTime;
+        return true;
+    }
+    return false;
+}
 
 void Init() {
     player = Player({ 50.0f , 950.0f });
@@ -31,17 +43,42 @@ void Init() {
 
     door = Door({2700, 900});
 
-    enemy = { { 1488.0f, 950.0f}, 100, 5 };
+    enemy = { { 1488.0f, 950.0f}, 100, 10 };
 }
 
-void EnemyIsLookingForAPlayer(Player& player, Enemy& enemy) {
-    if (player.GetPlayerPositionX() + 64 >= enemy.GetEnemyPositionX() - 250
-        && player.GetPlayerPositionX() + 64 <= enemy.GetEnemyPositionX() + 32) {
+bool EnemyIsLookingForAPLayerLeft() {
+    return (player.GetPlayerPositionX() + 64 >= enemy.GetEnemyPositionX() - 250
+        && player.GetPlayerPositionX() + 32 <= enemy.GetEnemyPositionX() + 32);
+}
+
+bool EnemyIsLookingForAPLayerRight() {
+    return (player.GetPlayerPositionX() + 64 <= enemy.GetEnemyPositionX() + 250
+        && player.GetPlayerPositionX() + 32 >= enemy.GetEnemyPositionX() + 32);
+}
+
+void EnemyGoesToThePlayer(Player& player, Enemy& enemy) {
+    if (EnemyIsLookingForAPLayerLeft()) {
         enemy.EnemyMoveX(-4.0f);
     }
-    if (player.GetPlayerPositionX() + 64 <= enemy.GetEnemyPositionX() + 250
-        && player.GetPlayerPositionX() + 64 >= enemy.GetEnemyPositionX() - 32) {
+    if (EnemyIsLookingForAPLayerRight()) {
         enemy.EnemyMoveX(4.0f);
+    }
+}
+
+void EnemyAttacksThePlayer() {
+    if (EnemyIsLookingForAPLayerLeft() &&
+        player.GetPlayerPositionX() + 64 >= enemy.GetEnemyPositionX() - 100
+        && player.GetPlayerPositionX() + 32 <= enemy.GetEnemyPositionX() + 32) {
+        if (EventTriggered(1)) {
+            player.PlayerTakesDamageFromTheEnemy(enemy.GetEnemyDamage());
+        }
+    }
+    if (EnemyIsLookingForAPLayerRight() &&
+        player.GetPlayerPositionX() + 64 <= enemy.GetEnemyPositionX() + 100
+        && player.GetPlayerPositionX() + 32 >= enemy.GetEnemyPositionX() + 32) {
+        if (EventTriggered(1)) {
+            player.PlayerTakesDamageFromTheEnemy(enemy.GetEnemyDamage());
+        }
     }
 }
 
@@ -86,7 +123,8 @@ void MapLogic() {
         }
         break;
     case LEVEL_2:
-        EnemyIsLookingForAPlayer(player, enemy);
+        EnemyGoesToThePlayer(player, enemy);
+        EnemyAttacksThePlayer();
     }
 }
 

@@ -37,5 +37,3 @@ float Enemy::GetEnemyPositionX()
 void Enemy::EnemyMoveX(float coef) {
 	_enemyPosition.x += coef;
 }
-
-

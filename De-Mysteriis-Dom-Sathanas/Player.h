@@ -58,4 +58,7 @@ public:
 	Vector2 GetPlayerPosition();
 
 	int GetPlayerDamage();
+	void PlayerTakesDamageFromTheEnemy(int damage);
+
+	bool PlayerDeath();
 };
