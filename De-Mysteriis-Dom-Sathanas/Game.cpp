@@ -45,7 +45,7 @@ void Init() {
 
     door = Door({2700, 900});
 
-    enemy = { { 1488.0f, 950.0f}, 100, 10 };
+    enemy = { { 1488.0f, 950.0f}, 100, 15 };
 }
 
 bool EnemyIsLookingForAPLayerLeft() {
@@ -60,10 +60,10 @@ bool EnemyIsLookingForAPLayerRight() {
 
 void EnemyGoesToThePlayer(Enemy &enemy) {
     if (EnemyIsLookingForAPLayerLeft() && enemy.GetEnemyHealth() > 0) {
-        enemy.EnemyMoveX(-4.0f);
+        enemy.EnemyMoveX(-5.5f);
     }
     if (EnemyIsLookingForAPLayerRight() && enemy.GetEnemyHealth() > 0) {
-        enemy.EnemyMoveX(4.0f);
+        enemy.EnemyMoveX(5.5f);
     }
 }
 
