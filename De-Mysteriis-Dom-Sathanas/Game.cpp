@@ -91,7 +91,7 @@ void PlayerAttacksEnemy(Enemy &enemy) {
     }
     if (EnemyIsLookingForAPLayerRight() &&
         player.GetPlayerPositionX() + 64 <= enemy.GetEnemyPositionX() + 32 + 70
-        && player.GetPlayerPositionX() >= enemy.GetEnemyPositionX() + 32) {
+        && player.GetPlayerPositionX() + 32 >= enemy.GetEnemyPositionX() + 32) {
         if (EventTriggered(0.5f)) {
             enemy.EnemyTakesDamageFromThePlayer(player.GetPlayerDamage());
         }
