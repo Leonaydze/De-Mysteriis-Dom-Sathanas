@@ -7,7 +7,7 @@
 #include "CustomColors.h"
 #include <ctime>
 
-extern GameScreen _currentScreen = LEVEL_2;
+extern GameScreen _currentScreen = MAIN_MENU;
 
 Player player;
 Camera2D _playerCamera;
