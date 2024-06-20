@@ -135,3 +135,10 @@ int Player::GetPlayerDamage()
 void Player::PlayerTakesDamageFromTheEnemy(int damage){
 	_health -= damage;
 }
+
+void Player::PlayerDeath(){
+	if (_health <= 0) {
+		DrawText("YOU ARE DEAD", _playerPosition.x - 200, _playerPosition.y - 500, 50, WHITE);
+		DrawText("PRESS ESC TO QUIT", _playerPosition.x - 270, _playerPosition.y - 450, 50, WHITE);
+	}
+}

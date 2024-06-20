@@ -191,4 +191,5 @@ void Update() {
         player.MoveVerticallyDown();
         player.SetPlayerCanJump(false);
     }
+    player.PlayerDeath();
 }
