@@ -80,7 +80,6 @@ void Player::PlayerController() {
 	}
 	if (IsKeyPressed(KEY_SPACE) && _health > 0 && !IsKeyPressedRepeat(KEY_SPACE) && _playerCanJump) {
 		_playerJump = true;
-		_playerCanJump = false;
 	}
 
 	_playerVelocity.y = 0;
@@ -96,7 +95,11 @@ float Player::GetJumpHeight() {
 }
 
 bool Player::PlayerMaxJump() {
-	return (_jumpHeight >= _jumpMaxHeight);
+	if (_jumpHeight >= _jumpMaxHeight) {
+		_playerJump = false;
+		return true;
+	}
+	return false;
 }
 
 void Player::SetPlayerCanJump(bool playerCanJump) {
@@ -113,7 +116,7 @@ void Player::MoveVertically() {
 		_playerJumpSpeed -= 0.1f;
 }
 void Player::MoveVerticallyDown() {
-	_jumpHeight -= _playerJumpSpeed;
+	_jumpHeight = 0;
 	_playerPosition.y += _playerJumpSpeed;
 	if (_playerJumpSpeed <= 5.5f)
 		_playerJumpSpeed += 0.3f;

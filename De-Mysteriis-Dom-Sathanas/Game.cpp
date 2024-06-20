@@ -184,12 +184,16 @@ void Update() {
     player.PlayerController();
     player.Draw();
 
-    if (player.IsPlayerJump() && !player.PlayerMaxJump() && !player.GetPlayerCanJump()) {
+
+    if (player.IsPlayerJump() && !player.PlayerMaxJump() && player.GetPlayerCanJump()) {
         player.MoveVertically();
     }
-    else if (!PlayerOnGround(player, mainGroundFloor)) {
-        player.MoveVerticallyDown();
-        player.SetPlayerCanJump(false);
+    else if (PlayerOnGround(player, mainGroundFloor)) {
+        player.SetPlayerCanJump(true);
     }
+    else if (player.PlayerMaxJump() || !player.IsPlayerJump()) {
+        player.MoveVerticallyDown();
+    } 
+
     player.PlayerDeath();
 }
