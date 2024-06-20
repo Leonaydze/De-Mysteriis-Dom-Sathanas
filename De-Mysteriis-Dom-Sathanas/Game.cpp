@@ -91,7 +91,7 @@ void PlayerAttacksEnemy(Enemy &enemy) {
 bool PlayerOnGround(Player player, Ground& ground) {
     player.SetPlayerCanJump(true);
     return (player.GetPlayerPositionX() + 64 >= ground.GetGroundPositionX() && player.GetPlayerPositionX() <= ground.GetGroundPositionX() + ground.GetGroundWidth()
-        && player.GetPlayerPositionY() + 64 >= ground.GetGroundPositionY() && player.GetPlayerPositionY() <= ground.GetGroundPositionY() + ground.GetGroundHeight());
+        && player.GetPlayerPositionY() + 64 >= ground.GetGroundPositionY() + 15 && player.GetPlayerPositionY() <= ground.GetGroundPositionY() + ground.GetGroundHeight());
 }
 
 void PlayerCanWalk(Player player, Ground ground) {
