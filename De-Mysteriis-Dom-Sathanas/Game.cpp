@@ -121,7 +121,7 @@ void MapLogic() {
         }
         break;
     case LEVEL_1:
-        if (player.GetPlayerPositionX() + 64 >= door.DoorPositionX() && player.GetPlayerPositionX() - 64 <= door.DoorPositionX() + 128 &&
+        if (player.GetPlayerPositionX() + 64 >= door.DoorPositionX() && player.GetPlayerPositionX() <= door.DoorPositionX() + 128 &&
             player.GetPlayerPositionY() + 64 >= door.DoorPositionY() && player.GetPlayerPositionY() <= door.DoorPositionY() + 128){
             _currentScreen = LEVEL_2;
             player.SetPlayerPosition({ 50.0f , 950.0f });
