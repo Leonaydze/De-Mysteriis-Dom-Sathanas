@@ -19,7 +19,7 @@ Ground leftBorder;
 
 Door door;
 
-Enemy enemy;
+Enemy enemy_lv2;
 
 double lastUpdateTime = 0;
 bool EventTriggered(double interval)
@@ -45,31 +45,31 @@ void Init() {
 
     door = Door({2700, 900});
 
-    enemy = { { 1488.0f, 950.0f}, 100, 15 };
+    enemy_lv2 = { { 1488.0f, 950.0f}, 100, 15 };
 }
 
-bool EnemyIsLookingForAPLayerLeft() {
+bool EnemyIsLookingForAPlayerLeft(Enemy &enemy) {
     return (player.GetPlayerPositionX() + 64 >= enemy.GetEnemyPositionX() - 250
         && player.GetPlayerPositionX() + 32 <= enemy.GetEnemyPositionX() + 32);
 }
 
-bool EnemyIsLookingForAPLayerRight() {
+bool EnemyIsLookingForAPlayerRight(Enemy& enemy) {
     return (player.GetPlayerPositionX() + 64 <= enemy.GetEnemyPositionX() + 250
         && player.GetPlayerPositionX() >= enemy.GetEnemyPositionX() + 32);
 }
 
 void EnemyGoesToThePlayer(Enemy &enemy) {
-    if (EnemyIsLookingForAPLayerLeft() && enemy.GetEnemyHealth() > 0) {
+    if (EnemyIsLookingForAPlayerLeft(enemy) && enemy.GetEnemyHealth() > 0) {
         enemy.EnemyMoveX(-5.5f);
     }
-    if (EnemyIsLookingForAPLayerRight() && enemy.GetEnemyHealth() > 0) {
+    if (EnemyIsLookingForAPlayerRight(enemy) && enemy.GetEnemyHealth() > 0) {
         enemy.EnemyMoveX(5.5f);
     }
 }
 
 void EnemyAttacksThePlayer(Enemy &enemy) {
-    if (enemy.GetEnemyHealth() > 0 && EnemyIsLookingForAPLayerLeft() 
-        && player.GetPlayerPositionX() + 64 >= enemy.GetEnemyPositionX() - 100
+    if (enemy.GetEnemyHealth() > 0 && EnemyIsLookingForAPlayerLeft(enemy)
+        && player.GetPlayerPositionX() + 64 >= enemy_lv2.GetEnemyPositionX() - 100
         && player.GetPlayerPositionX() <= enemy.GetEnemyPositionX() + 164){
         if (EventTriggered(1)) {
             player.PlayerTakesDamageFromTheEnemy(enemy.GetEnemyDamage());
@@ -127,13 +127,17 @@ void MapLogic() {
         }
         break;
     case LEVEL_2:
-        EnemyGoesToThePlayer(enemy);
-        EnemyAttacksThePlayer(enemy);
-        PlayerAttacksEnemy(enemy);
+        EnemyGoesToThePlayer(enemy_lv2);
+        EnemyAttacksThePlayer(enemy_lv2);
+        PlayerAttacksEnemy(enemy_lv2);
         if (player.GetPlayerPositionX() + 64 >= door.DoorPositionX() && player.GetPlayerPositionX() - 64 <= door.DoorPositionX() + 128 &&
             player.GetPlayerPositionY() + 64 >= door.DoorPositionY() && player.GetPlayerPositionY() <= door.DoorPositionY() + 128) {
             player.PlayerTakesDamageFromTheEnemy(-(100 - player.GetPlayerHealth()));
+            _currentScreen = LEVEL_3;
+            player.SetPlayerPosition({ 50.0f , 950.0f });
         }
+    case LEVEL_3:
+        break;
     }
 }
 
@@ -161,8 +165,11 @@ void DrawMap() {
         BeginMode2D(_playerCamera);
         mainGroundFloor.GroundDraw();
         DrawText("LEVEL_2", player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700, 40, WHITE);
-        enemy.DrawEnemy();
+        enemy_lv2.DrawEnemy();
         door.DrawDoor();
+        break;
+    case LEVEL_3:
+        BeginMode2D(_playerCamera);
         break;
         EndMode2D();
         EndDrawing();
