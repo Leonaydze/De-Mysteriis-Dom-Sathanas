@@ -228,7 +228,7 @@ void Update() {
             enemy_lv3.EnemyMoveVerticallyDown();
         }
     }
-    if (!EnemyOnGround(enemy_lv3_2, platform_2)) {
+    if (!EnemyOnGround(enemy_lv3_2, platform_2) && !EnemyOnGround(enemy_lv3, platform)) {
         if (!EnemyOnGround(enemy_lv3_2, mainGroundFloor)) {
             enemy_lv3_2.EnemyMoveVerticallyDown();
         }
