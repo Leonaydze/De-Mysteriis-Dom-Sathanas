@@ -7,7 +7,7 @@
 #include "CustomColors.h"
 #include <ctime>
 
-extern GameScreen _currentScreen = MAIN_MENU;
+extern GameScreen _currentScreen = LEVEL_2;
 
 Font font;
 
@@ -19,9 +19,12 @@ Pugalo pugalo;
 Ground mainGroundFloor;
 Ground leftBorder;
 
+Ground platform;
+
 Door door;
 
 Enemy enemy_lv2;
+Enemy enemy_lv3, enemy_lv3_2, enemy_lv3_3;
 
 double lastUpdateTime = 0;
 bool EventTriggered(double interval)
@@ -39,18 +42,19 @@ void Init() {
     font = LoadFont("Resources\\KHTitle.otf");
     
     player = Player({ 50.0f , 950.0f });
-
     _playerCamera;
 
-    pugalo = Pugalo({ 2500.0f, 930.0f});
+    pugalo = Pugalo({ 2500.0f , 930.0f});
 
-    mainGroundFloor = { { 0, 1000 } , 2920, 150, darkGrey };
+    mainGroundFloor = { { 0 , 1000 } , 5000, 1500, darkGrey };
+    leftBorder = { { -1000.0f , 0.0f }, 1000, 5000, DARKGRAY };
 
-    leftBorder = { {-1000.0f, 0.0f}, 2000, 5000, DARKGRAY };
+    door = Door( { 2700 , 900 } );
 
-    door = Door({2700, 900});
+    enemy_lv2 = { { 1488.0f , 950.0f }, 100, 15 };
 
-    enemy_lv2 = { { 1488.0f, 950.0f}, 100, 15 };
+    platform = { { 400 , 900 }, 256, 32, DARKGRAY };
+    enemy_lv3 = { { 400 , 820 }, 100, 5 };
 }
 
 bool EnemyIsLookingForAPlayerLeft(Enemy &enemy) {
@@ -75,8 +79,10 @@ void EnemyGoesToThePlayer(Enemy &enemy) {
 void EnemyAttacksThePlayer(Enemy &enemy) {
     if (enemy.GetEnemyHealth() > 0 && EnemyIsLookingForAPlayerLeft(enemy)
         && player.GetPlayerPositionX() + 64 >= enemy_lv2.GetEnemyPositionX() - 100
-        && player.GetPlayerPositionX() <= enemy.GetEnemyPositionX() + 164){
-        if (EventTriggered(1)) {
+        && player.GetPlayerPositionX() <= enemy.GetEnemyPositionX() + 164
+        && player.GetPlayerPositionY() >= enemy.GetEnemyPositionY() - 20
+        && player. GetPlayerPositionY() + 64 <= enemy.GetEnemyPositionY() + 84){
+        if (EventTriggered(1.0f)) {
             player.PlayerTakesDamageFromTheEnemy(enemy.GetEnemyDamage());
         }
     }
@@ -84,13 +90,18 @@ void EnemyAttacksThePlayer(Enemy &enemy) {
 
 void PlayerAttacksEnemy(Enemy &enemy) {
     if (player.GetPlayerPositionX() + 64 >= enemy.GetEnemyPositionX() - 70
-        && player.GetPlayerPositionX() <= enemy.GetEnemyPositionX() + 134) {
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-            if (EventTriggered(1.0f)) {
-                enemy.EnemyTakesDamageFromThePlayer(player.GetPlayerDamage());
-            }
+        && player.GetPlayerPositionX() <= enemy.GetEnemyPositionX() + 134
+        && player.GetPlayerPositionY() >= enemy.GetEnemyPositionY() - 20
+        && player.GetPlayerPositionY() + 64 <= enemy.GetEnemyPositionY() + 84) {
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && EventTriggered(1.0f)) {
+            enemy.EnemyTakesDamageFromThePlayer(player.GetPlayerDamage());
         }
     }
+}
+
+bool EnemyOnGround(Enemy &enemy, Ground& ground) {
+    return (enemy.GetEnemyPositionX() + 64 >= ground.GetGroundPositionX() && enemy.GetEnemyPositionX() <= ground.GetGroundPositionX() + ground.GetGroundWidth()
+        && enemy.GetEnemyPositionY() + 64 >= ground.GetGroundPositionY() + 15 && enemy.GetEnemyPositionY() <= ground.GetGroundPositionY() + ground.GetGroundHeight());
 }
 
 bool PlayerOnGround(Player player, Ground& ground) {
@@ -141,7 +152,11 @@ void MapLogic() {
             _currentScreen = LEVEL_3;
             player.SetPlayerPosition({ 50.0f , 950.0f });
         }
+        break;
     case LEVEL_3:
+        EnemyGoesToThePlayer(enemy_lv3);
+        EnemyAttacksThePlayer(enemy_lv3);
+        PlayerAttacksEnemy(enemy_lv3);
         break;
     }
 }
@@ -156,25 +171,30 @@ void DrawMap() {
     case MAIN_MENU:
         DrawTextEx(font, "MAIN_MENU", { 20, 20 }, 40, 2, WHITE);
         DrawRectangle(GetScreenWidth() / 2 - 50, GetScreenHeight() / 2 - 25, 100, 50, WHITE);
-        DrawTextEx(font, "Play", {(float) GetScreenWidth() / 2 - 45, (float)GetScreenHeight() / 2 - 20 }, 42, 2, BLACK);
+        DrawTextEx(font, "Play", {(float) GetScreenWidth() / 2 - 45, (float)GetScreenHeight() / 2 - 20 }, 42, 4, BLACK);
         break;
     case LEVEL_1:
         BeginMode2D(_playerCamera);
         mainGroundFloor.GroundDraw();
         leftBorder.GroundDraw();
-        DrawTextEx(font, "LEVEL_1", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 3, WHITE);
+        DrawTextEx(font, "LEVEL_1", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
         pugalo.Draw();
         door.DrawDoor();
         break;
     case LEVEL_2:
         BeginMode2D(_playerCamera);
+        DrawTextEx(font, "LEVEL_2", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
         mainGroundFloor.GroundDraw();
-        DrawTextEx(font, "LEVEL_2", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 1, WHITE);
         enemy_lv2.DrawEnemy();
         door.DrawDoor();
         break;
     case LEVEL_3:
         BeginMode2D(_playerCamera);
+        mainGroundFloor.GroundDraw();
+        leftBorder.GroundDraw();
+        DrawTextEx(font, "LEVEL_3", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
+        platform.GroundDraw();
+        enemy_lv3.DrawEnemy();
         break;
         EndMode2D();
         EndDrawing();
@@ -196,9 +216,18 @@ void Update() {
     else if (PlayerOnGround(player, mainGroundFloor)) {
         player.SetPlayerCanJump(true);
     }
+    else if (PlayerOnGround(player, platform)) {
+        player.SetPlayerCanJump(true);
+    }
     else if (player.PlayerMaxJump() || !player.IsPlayerJump()) {
         player.MoveVerticallyDown();
     } 
+
+    if (!EnemyOnGround(enemy_lv3, platform)) {
+        if (!EnemyOnGround(enemy_lv3, mainGroundFloor)) {
+            enemy_lv3.EnemyMoveVerticallyDown();
+        }
+    }
 
     player.PlayerDeath();
 }

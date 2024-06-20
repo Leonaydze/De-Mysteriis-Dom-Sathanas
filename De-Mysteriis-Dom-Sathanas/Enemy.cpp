@@ -46,3 +46,7 @@ void Enemy::EnemyMoveX(float coef) {
 void Enemy::EnemyTakesDamageFromThePlayer(int damage){
 	_health -= damage;
 }
+
+void Enemy::EnemyMoveVerticallyDown() {
+	_enemyPosition.y += 6.0f;
+}

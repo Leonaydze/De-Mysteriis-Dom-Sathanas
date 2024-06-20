@@ -34,16 +34,15 @@ int main()
 		
 		BeginDrawing();
 		ClearBackground(DARKGRAY);
-
-
-		if (exitWindowRequested)
-			{
-				DrawRectangle(GetMonitorWidth(GetCurrentMonitor()) / 2 - 400, GetMonitorHeight(GetCurrentMonitor()) / 2 - 80, 880, 50, WHITE);
-				DrawTextEx(mainFont, "ARE YOU SURE YOU  WANT TO QUIT THE GAME? ( Y / N )", { (float)GetMonitorWidth(GetCurrentMonitor()) / 2 - 390 , (float)GetMonitorHeight(GetCurrentMonitor()) / 2 - 70 }, 30, 4, BLACK);
-			}
+		
+		if (exitWindowRequested){
+			DrawRectangle(GetMonitorWidth(GetCurrentMonitor()) / 2 - 400, GetMonitorHeight(GetCurrentMonitor()) / 2 - 80, 880, 50, WHITE);
+			DrawTextEx(mainFont, "ARE YOU SURE YOU  WANT TO QUIT THE GAME? ( Y / N )", { (float)GetMonitorWidth(GetCurrentMonitor()) / 2 - 390 , (float)GetMonitorHeight(GetCurrentMonitor()) / 2 - 70 }, 30, 4, BLACK);
+		}
 
 		DrawMap();
 		MapLogic();
+
 
 		if (GetCurrentMap() != 0 && GetCurrentMap() != 1 ) {
 			Update();

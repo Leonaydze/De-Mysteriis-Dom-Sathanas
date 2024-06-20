@@ -27,5 +27,7 @@ public:
 
 	void EnemyMoveX(float coef);
 	void EnemyTakesDamageFromThePlayer(int damage);
+
+	void EnemyMoveVerticallyDown();
 };
 

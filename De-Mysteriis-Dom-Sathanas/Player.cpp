@@ -56,7 +56,7 @@ void Player::Draw() {
 }
 
 void Player::PlayerController() {
-	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && _health > 0) {
 		SetRandomDamage();
 	}
 	if (IsKeyDown(KEY_D) && _health > 0 && _playerPosition.x < GetMonitorWidth(GetCurrentMonitor()) + 1000 && !IsKeyDown(KEY_A) && _playerCanWalk) {
