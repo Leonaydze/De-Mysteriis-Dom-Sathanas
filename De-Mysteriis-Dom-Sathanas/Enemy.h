@@ -25,5 +25,6 @@ public:
 	float GetEnemyPositionX();
 
 	void EnemyMoveX(float coef);
+	void EnemyTakesDamageFromThePlayer(int damage);
 };
 

@@ -133,6 +133,5 @@ int Player::GetPlayerDamage()
 }
 
 void Player::PlayerTakesDamageFromTheEnemy(int damage){
-	_damage -= damage;
-	_health += _damage;
+	_health -= damage;
 }

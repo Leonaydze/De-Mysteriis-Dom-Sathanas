@@ -53,31 +53,47 @@ bool EnemyIsLookingForAPLayerLeft() {
 
 bool EnemyIsLookingForAPLayerRight() {
     return (player.GetPlayerPositionX() + 64 <= enemy.GetEnemyPositionX() + 250
-        && player.GetPlayerPositionX() + 32 >= enemy.GetEnemyPositionX() + 32);
+        && player.GetPlayerPositionX() >= enemy.GetEnemyPositionX() + 32);
 }
 
-void EnemyGoesToThePlayer(Player& player, Enemy& enemy) {
-    if (EnemyIsLookingForAPLayerLeft()) {
+void EnemyGoesToThePlayer(Enemy &enemy) {
+    if (EnemyIsLookingForAPLayerLeft() && enemy.GetEnemyHealth() > 0) {
         enemy.EnemyMoveX(-4.0f);
     }
-    if (EnemyIsLookingForAPLayerRight()) {
+    if (EnemyIsLookingForAPLayerRight() && enemy.GetEnemyHealth() > 0) {
         enemy.EnemyMoveX(4.0f);
     }
 }
 
-void EnemyAttacksThePlayer() {
-    if (EnemyIsLookingForAPLayerLeft() &&
+void EnemyAttacksThePlayer(Enemy &enemy) {
+    if (enemy.GetEnemyHealth() > 0 && EnemyIsLookingForAPLayerLeft() &&
         player.GetPlayerPositionX() + 64 >= enemy.GetEnemyPositionX() - 100
         && player.GetPlayerPositionX() + 32 <= enemy.GetEnemyPositionX() + 32) {
         if (EventTriggered(1)) {
             player.PlayerTakesDamageFromTheEnemy(enemy.GetEnemyDamage());
         }
     }
-    if (EnemyIsLookingForAPLayerRight() &&
+    if (enemy.GetEnemyHealth() > 0 && EnemyIsLookingForAPLayerRight() &&
         player.GetPlayerPositionX() + 64 <= enemy.GetEnemyPositionX() + 100
-        && player.GetPlayerPositionX() + 32 >= enemy.GetEnemyPositionX() + 32) {
+        && player.GetPlayerPositionX() >= enemy.GetEnemyPositionX() + 32) {
         if (EventTriggered(1)) {
             player.PlayerTakesDamageFromTheEnemy(enemy.GetEnemyDamage());
+        }
+    }
+}
+
+void PlayerAttacksEnemy(Enemy &enemy) {
+    if (player.GetPlayerPositionX() + 64 >= enemy.GetEnemyPositionX() + 32 - 70
+        && player.GetPlayerPositionX() + 32 <= enemy.GetEnemyPositionX() + 32) {
+        if (EventTriggered(0.5f)) {
+            enemy.EnemyTakesDamageFromThePlayer(player.GetPlayerDamage());
+        }
+    }
+    if (EnemyIsLookingForAPLayerRight() &&
+        player.GetPlayerPositionX() + 64 <= enemy.GetEnemyPositionX() + 32 + 70
+        && player.GetPlayerPositionX() >= enemy.GetEnemyPositionX() + 32) {
+        if (EventTriggered(0.5f)) {
+            enemy.EnemyTakesDamageFromThePlayer(player.GetPlayerDamage());
         }
     }
 }
@@ -123,8 +139,9 @@ void MapLogic() {
         }
         break;
     case LEVEL_2:
-        EnemyGoesToThePlayer(player, enemy);
-        EnemyAttacksThePlayer();
+        EnemyGoesToThePlayer(enemy);
+        EnemyAttacksThePlayer(enemy);
+        PlayerAttacksEnemy(enemy);
     }
 }
 
