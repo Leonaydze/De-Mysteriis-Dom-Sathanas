@@ -34,6 +34,11 @@ float Enemy::GetEnemyPositionX()
 	return _enemyPosition.x;
 }
 
+float Enemy::GetEnemyPositionY()
+{
+	return _enemyPosition.y;
+}
+
 void Enemy::EnemyMoveX(float coef) {
 	_enemyPosition.x += coef;
 }

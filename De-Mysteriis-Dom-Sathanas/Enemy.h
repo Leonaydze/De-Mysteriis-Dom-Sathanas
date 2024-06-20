@@ -23,6 +23,7 @@ public:
 	int GetEnemyHealth();
 
 	float GetEnemyPositionX();
+	float GetEnemyPositionY();
 
 	void EnemyMoveX(float coef);
 	void EnemyTakesDamageFromThePlayer(int damage);

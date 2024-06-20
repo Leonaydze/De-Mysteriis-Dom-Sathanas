@@ -2,6 +2,7 @@
 
 void Player::SetRandomDamage()
 {
+	_damage = 0;
 	_damage = rand() % 30;
 	std::cout << _damage << std::endl;
 }
@@ -127,8 +128,7 @@ Vector2 Player::GetPlayerPosition() {
 	return _playerPosition;
 }
 
-int Player::GetPlayerDamage()
-{
+int Player::GetPlayerDamage(){
 	return _damage;
 }
 

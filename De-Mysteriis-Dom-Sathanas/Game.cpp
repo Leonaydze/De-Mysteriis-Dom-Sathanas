@@ -7,7 +7,7 @@
 #include "CustomColors.h"
 #include <ctime>
 
-extern GameScreen _currentScreen = MAIN_MENU;
+extern GameScreen _currentScreen = LEVEL_2;
 
 Player player;
 Camera2D _playerCamera;
@@ -68,16 +68,16 @@ void EnemyGoesToThePlayer(Enemy &enemy) {
 }
 
 void EnemyAttacksThePlayer(Enemy &enemy) {
-    if (enemy.GetEnemyHealth() > 0 && EnemyIsLookingForAPLayerLeft() &&
-        player.GetPlayerPositionX() + 64 >= enemy.GetEnemyPositionX() - 100
-        && player.GetPlayerPositionX() + 32 <= enemy.GetEnemyPositionX() + 32) {
+    if (enemy.GetEnemyHealth() > 0 && EnemyIsLookingForAPLayerLeft() 
+        && player.GetPlayerPositionX() + 64 >= enemy.GetEnemyPositionX() - 100
+        && player.GetPlayerPositionX() + 32 <= enemy.GetEnemyPositionX() + 32){
         if (EventTriggered(1)) {
             player.PlayerTakesDamageFromTheEnemy(enemy.GetEnemyDamage());
         }
     }
-    if (enemy.GetEnemyHealth() > 0 && EnemyIsLookingForAPLayerRight() &&
-        player.GetPlayerPositionX() + 64 <= enemy.GetEnemyPositionX() + 100
-        && player.GetPlayerPositionX() >= enemy.GetEnemyPositionX() + 32) {
+    if (enemy.GetEnemyHealth() > 0 && EnemyIsLookingForAPLayerRight() 
+        && player.GetPlayerPositionX() + 64 <= enemy.GetEnemyPositionX() + 100
+        && player.GetPlayerPositionX() >= enemy.GetEnemyPositionX() + 32){
         if (EventTriggered(1)) {
             player.PlayerTakesDamageFromTheEnemy(enemy.GetEnemyDamage());
         }
@@ -91,15 +91,14 @@ void PlayerAttacksEnemy(Enemy &enemy) {
             enemy.EnemyTakesDamageFromThePlayer(player.GetPlayerDamage());
         }
     }
-    if (EnemyIsLookingForAPLayerRight() &&
-        player.GetPlayerPositionX() + 64 <= enemy.GetEnemyPositionX() + 32 + 70
+    if (player.GetPlayerPositionY() + 64 <= enemy.GetEnemyPositionY()
+        && player.GetPlayerPositionX() + 64 <= enemy.GetEnemyPositionX() + 32 + 70
         && player.GetPlayerPositionX() + 32 >= enemy.GetEnemyPositionX() + 32) {
         if (EventTriggered(0.5f)) {
             enemy.EnemyTakesDamageFromThePlayer(player.GetPlayerDamage());
         }
     }
 }
-
 
 bool PlayerOnGround(Player& player, Ground& ground) {
     player.SetPlayerCanJump(true);
