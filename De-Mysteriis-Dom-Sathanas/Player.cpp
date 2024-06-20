@@ -11,6 +11,9 @@ void Player::MissAttack(){
 	if (_damage == 0) {
 		DrawText("Miss", _playerPosition.x + 100, _playerPosition.y - 100, 40, WHITE);
 	}
+	if (_damage >= 25) {
+		DrawText("CRITICAL DAMAGE", _playerPosition.x + 100, _playerPosition.y - 80, 40, RED);
+	}
 }
 
 void Player::DrawHUD() {
