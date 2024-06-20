@@ -16,6 +16,8 @@ int main()
 	
 	SetTargetFPS(60);
 
+	Font mainFont = LoadFont("Resources\\KHTitle.otf");
+
 	while (!exitWindow) {
 		if (WindowShouldClose() && GetCurrentMap() != 0 || IsKeyPressed(KEY_ESCAPE) && GetCurrentMap() != 0){
 			exitWindowRequested = true;
@@ -36,8 +38,8 @@ int main()
 
 		if (exitWindowRequested)
 			{
-				DrawRectangle(GetMonitorWidth(GetCurrentMonitor()) / 2 - 360, GetMonitorHeight(GetCurrentMonitor()) / 2 - 80, 750, 50, WHITE);
-				DrawText("Are you sure you want to quit the game? [Y/N]", GetMonitorWidth(GetCurrentMonitor()) / 2 - 350 , GetMonitorHeight(GetCurrentMonitor()) / 2 - 70, 30, BLACK);
+				DrawRectangle(GetMonitorWidth(GetCurrentMonitor()) / 2 - 400, GetMonitorHeight(GetCurrentMonitor()) / 2 - 80, 880, 50, WHITE);
+				DrawTextEx(mainFont, "ARE YOU SURE YOU  WANT TO QUIT THE GAME? ( Y / N )", { (float)GetMonitorWidth(GetCurrentMonitor()) / 2 - 390 , (float)GetMonitorHeight(GetCurrentMonitor()) / 2 - 70 }, 30, 4, BLACK);
 			}
 
 		DrawMap();

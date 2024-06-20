@@ -28,6 +28,7 @@ private:
 	void DrawHUD();
 
 	Texture2D _playerTexture;
+	Font _playerFont;
 public:
 	Player();
 

@@ -9,6 +9,8 @@
 
 extern GameScreen _currentScreen = MAIN_MENU;
 
+Font font;
+
 Player player;
 Camera2D _playerCamera;
 
@@ -34,6 +36,8 @@ bool EventTriggered(double interval)
 }
 
 void Init() {
+    font = LoadFont("Resources\\KHTitle.otf");
+    
     player = Player({ 50.0f , 950.0f });
 
     _playerCamera;
@@ -150,22 +154,22 @@ void DrawMap() {
     switch (_currentScreen)
     {
     case MAIN_MENU:
-        DrawText("MAIN_MENU", 20, 20, 40, WHITE);
+        DrawTextEx(font, "MAIN_MENU", { 20, 20 }, 40, 2, WHITE);
         DrawRectangle(GetScreenWidth() / 2 - 50, GetScreenHeight() / 2 - 25, 100, 50, WHITE);
-        DrawText("Play", GetScreenWidth() / 2 - 40, GetScreenHeight() / 2 - 20, 40, BLACK);
+        DrawTextEx(font, "Play", {(float) GetScreenWidth() / 2 - 45, (float)GetScreenHeight() / 2 - 20 }, 42, 2, BLACK);
         break;
     case LEVEL_1:
         BeginMode2D(_playerCamera);
         mainGroundFloor.GroundDraw();
         leftBorder.GroundDraw();
-        DrawText("LEVEL_1", player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700, 40, WHITE);
+        DrawTextEx(font, "LEVEL_1", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 3, WHITE);
         pugalo.Draw();
         door.DrawDoor();
         break;
     case LEVEL_2:
         BeginMode2D(_playerCamera);
         mainGroundFloor.GroundDraw();
-        DrawText("LEVEL_2", player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700, 40, WHITE);
+        DrawTextEx(font, "LEVEL_2", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 1, WHITE);
         enemy_lv2.DrawEnemy();
         door.DrawDoor();
         break;

@@ -9,10 +9,10 @@ void Player::SetRandomDamage()
 
 void Player::MissAttack(){
 	if (_damage == 0) {
-		DrawText("Miss", _playerPosition.x + 100, _playerPosition.y - 100, 40, WHITE);
+		DrawTextEx(_playerFont, "Miss", { _playerPosition.x + 100, _playerPosition.y - 100 }, 40, 3, WHITE);
 	}
 	if (_damage >= 25) {
-		DrawText("CRITICAL DAMAGE", _playerPosition.x + 80, _playerPosition.y - 80, 40, RED);
+		DrawTextEx(_playerFont, "CRITICAL DAMAGE", {_playerPosition.x + 80, _playerPosition.y - 80}, 40, 3, RED);
 	}
 }
 
@@ -27,6 +27,7 @@ Player::Player() {
 Player::Player(Vector2 playerPosition) {
 	_playerPosition = playerPosition;
 	_playerTexture = LoadTexture("Resources\\PlayerText.png");
+	_playerFont = LoadFont("Resources\\KHTitle.otf");
 }
 
 void Player::SetPlayerPosition(Vector2 playerPosition){

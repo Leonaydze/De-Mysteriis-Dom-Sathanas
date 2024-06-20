@@ -148,6 +148,9 @@
   <ItemGroup>
     <Image Include="Resources\PlayerText.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Font Include="Resources\KHTitle.otf" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

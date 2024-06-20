@@ -68,4 +68,9 @@
       <Filter>Файлы ресурсов</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <Font Include="Resources\KHTitle.otf">
+      <Filter>Файлы ресурсов</Filter>
+    </Font>
+  </ItemGroup>
 </Project>
