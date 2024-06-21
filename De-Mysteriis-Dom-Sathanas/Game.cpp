@@ -54,29 +54,17 @@ void Init() {
     enemy_lv2 = { { 1488.0f , 950.0f }, 100, 15 };
 
     platform = { { 700 , 900 }, 256, 32, DARKGRAY };
-    enemy_lv3 = { { 720 , 820 }, 100, 10 };
+    enemy_lv3 = { { 720 , 820 }, 100, 15 };
 
     platform_2 = { { 1000 , 800 }, 256, 32, DARKGRAY };
-    enemy_lv3_2 = { { 1020 , 740 }, 100, 10 };
-}
-
-void EnemyGoesToThePlayer(Enemy &enemy) {
-    if (player.GetPlayerPositionX() + 64 >= enemy.GetEnemyPositionX() - 250
-        && player.GetPlayerPositionX() + 64 <= enemy.GetEnemyPositionX() + 32 && enemy.GetEnemyHealth() > 0) {
-        enemy.EnemyMoveX(-5.5f);
-    }
-    if (player.GetPlayerPositionX() + 64 <= enemy.GetEnemyPositionX() + 250
-        && player.GetPlayerPositionX() >= enemy.GetEnemyPositionX() + 32 && enemy.GetEnemyHealth() > 0) {
-        enemy.EnemyMoveX(5.5f);
-    }
+    enemy_lv3_2 = { { 1020 , 740 }, 100, 15 };
 }
 
 void EnemyAttacksThePlayer(Enemy &enemy) {
-    if (enemy.GetEnemyHealth() > 0
-        && player.GetPlayerPositionX() + 64 >= enemy_lv2.GetEnemyPositionX() - 100
+    if (player.GetPlayerPositionX() + 64 >= enemy.GetEnemyPositionX() - 100
         && player.GetPlayerPositionX() <= enemy.GetEnemyPositionX() + 164
         && player.GetPlayerPositionY() >= enemy.GetEnemyPositionY() - 40
-        && player. GetPlayerPositionY() + 64 <= enemy.GetEnemyPositionY() + 104){
+        && player. GetPlayerPositionY() + 64 <= enemy.GetEnemyPositionY() + 104 && enemy.GetEnemyHealth() > 0){
         if (EventTriggered(1.0f)) {
             player.PlayerTakesDamageFromTheEnemy(enemy.GetEnemyDamage());
         }
@@ -91,6 +79,17 @@ void PlayerAttacksEnemy(Enemy &enemy) {
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && EventTriggered(0.5f)) {
             enemy.EnemyTakesDamageFromThePlayer(player.GetPlayerDamage());
         }
+    }
+}
+
+void EnemyGoesToThePlayer(Enemy &enemy) {
+    if (player.GetPlayerPositionX() + 64 >= enemy.GetEnemyPositionX() - 250
+        && player.GetPlayerPositionX() + 64 <= enemy.GetEnemyPositionX() + 64 && enemy.GetEnemyHealth() > 0) {
+        enemy.EnemyMoveX(-5.5f);
+    }
+    if (player.GetPlayerPositionX() + 64 <= enemy.GetEnemyPositionX() + 250
+        && player.GetPlayerPositionX() >= enemy.GetEnemyPositionX() && enemy.GetEnemyHealth() > 0) {
+        enemy.EnemyMoveX(5.5f);
     }
 }
 
@@ -149,12 +148,12 @@ void MapLogic() {
         }
         break;
     case LEVEL_3:
-        EnemyGoesToThePlayer(enemy_lv3);
         EnemyAttacksThePlayer(enemy_lv3);
-        PlayerAttacksEnemy(enemy_lv3);
-        EnemyGoesToThePlayer(enemy_lv3_2);
         EnemyAttacksThePlayer(enemy_lv3_2);
+        PlayerAttacksEnemy(enemy_lv3);
         PlayerAttacksEnemy(enemy_lv3_2);
+        EnemyGoesToThePlayer(enemy_lv3);
+        EnemyGoesToThePlayer(enemy_lv3_2);
         break;
     }
 }
@@ -216,7 +215,7 @@ void Update() {
     else if (PlayerOnGround(player, mainGroundFloor)) {
         player.SetPlayerCanJump(true);
     }
-    else if (PlayerOnGround(player, platform)) {
+    else if (PlayerOnGround(player, platform) || PlayerOnGround(player, platform_2)) {
         player.SetPlayerCanJump(true);
     }
     else if (player.PlayerMaxJump() || !player.IsPlayerJump()) {
@@ -228,11 +227,14 @@ void Update() {
             enemy_lv3.EnemyMoveVerticallyDown();
         }
     }
-    if (!EnemyOnGround(enemy_lv3_2, platform_2) && !EnemyOnGround(enemy_lv3, platform)) {
-        if (!EnemyOnGround(enemy_lv3_2, mainGroundFloor)) {
-            enemy_lv3_2.EnemyMoveVerticallyDown();
+    if (!EnemyOnGround(enemy_lv3_2, platform_2)) {
+        if (!EnemyOnGround(enemy_lv3, platform)) {
+            if (!EnemyOnGround(enemy_lv3_2, mainGroundFloor)) {
+                enemy_lv3_2.EnemyMoveVerticallyDown();
+            }
         }
     }
 
     player.PlayerDeath();
 }
+
