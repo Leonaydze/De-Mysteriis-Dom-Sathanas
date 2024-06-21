@@ -7,7 +7,7 @@
 #include "CustomColors.h"
 #include <ctime>
 
-extern GameScreen _currentScreen = MAIN_MENU;
+extern GameScreen _currentScreen = LEVEL_3;
 
 Font font;
 
@@ -20,6 +20,8 @@ Ground mainGroundFloor;
 Ground leftBorder;
 
 Ground platform, platform_2;
+
+Ground mainBorder;
 
 Door door;
 
@@ -71,11 +73,13 @@ void Init() {
 
 	enemy_lv2 = { { 1488.0f , 950.0f }, 100, 15 };
 
-	platform = { { 700 , 900 }, 256, 32, DARKGRAY };
-	enemy_lv3 = { { 720 , 820 }, 100, 15 };
+	platform = { { 1000 , 900 }, 256, 32, DARKGRAY };
+	enemy_lv3 = { { 1020 , 820 }, 100, 15 };
 
-	platform_2 = { { 1000 , 740 }, 256, 32, DARKGRAY };
-	enemy_lv3_2 = { { 1020 , 680 }, 100, 15 };
+	platform_2 = { { 1300 , 740 }, 256, 32, DARKGRAY };
+	enemy_lv3_2 = { { 1320 , 680 }, 100, 15 };
+
+	mainBorder = { { 1900 , 700 }, 128, 5000, darkGrey };
 }
 
 void EnemyAttacksThePlayer(Enemy &enemy) {
@@ -122,9 +126,9 @@ bool PlayerOnGround(Player player, Ground& ground) {
 		&& player.GetPlayerPositionY() + 64 >= ground.GetGroundPositionY() + 15 && player.GetPlayerPositionY() <= ground.GetGroundPositionY() + ground.GetGroundHeight());
 }
 
-void PlayerCanWalk(Player player, Ground ground) {
-	if (player.GetPlayerPositionX() >= ground.GetGroundPositionX() && player.GetPlayerPositionX() <= ground.GetGroundPositionX() + ground.GetGroundWidth()
-		&& (player.GetPlayerPositionY() >= ground.GetGroundPositionY() && player.GetPlayerPositionY() <= ground.GetGroundPositionY() + ground.GetGroundHeight())) {
+void PlayerCanWalk(Player player, Ground &ground) {
+	if (player.GetPlayerPositionX() + 64 >= ground.GetGroundPositionX() && player.GetPlayerPositionX() <= ground.GetGroundPositionX() + ground.GetGroundWidth()
+		 && player.GetPlayerPositionY() + 64 >= ground.GetGroundPositionY()) {
 		player.SetBoolPlayerCanWalk(false);
 	}
 	else {
@@ -225,6 +229,7 @@ void DrawMap() {
 		platform_2.GroundDraw();
 		enemy_lv3.DrawEnemy();
 		enemy_lv3_2.DrawEnemy();
+		mainBorder.GroundDraw();
 		break;
 		EndMode2D();
 		EndDrawing();
@@ -238,16 +243,22 @@ int GetCurrentMap() {
 void Update() {
 	player.PlayerController();
 	player.Draw();
-
-
 	
+	if (GetCurrentMap() == 4) {
+		PlayerCanWalk(player, mainBorder);
+	}
+
+	else {
+		player.SetBoolPlayerCanWalk(true);
+	}
 	if (player.IsPlayerJump() && !player.PlayerMaxJump() && player.GetPlayerCanJump()) {
 		player.MoveVertically();
 	}
 	else if (PlayerOnGround(player, mainGroundFloor)) {
 		player.SetPlayerCanJump(true);
 	}
-	else if ( GetCurrentMap() == 4 && PlayerOnGround(player, platform) || GetCurrentMap() == 4 && PlayerOnGround(player, platform_2)) {
+	else if ( GetCurrentMap() == 4 && (PlayerOnGround(player, platform) || PlayerOnGround(player, platform_2)
+		|| PlayerOnGround(player, mainBorder))) {
 		player.SetPlayerCanJump(true);
 	}
 	else if (player.PlayerMaxJump() || !player.IsPlayerJump()) {

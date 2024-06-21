@@ -49,8 +49,7 @@ int Player::GetPlayerHealth() {
 }
 
 void Player::Draw() {
-	DrawTexture(_playerTexture, _playerPosition.x, _playerPosition.y, WHITE);
-	//DrawRectangle(_playerPosition.x, _playerPosition.y, 64, 64, WHITE);
+	DrawTextureRec(_playerTexture, _frameRectangle, _playerPosition, WHITE);
 	MissAttack();
 	DrawHUD();
 }
@@ -64,9 +63,9 @@ void Player::PlayerController() {
 		if (IsKeyDown(KEY_LEFT_SHIFT)) {
 			_playerVelocity.x *= 1.5;
 		}
-	/*	if (_playerTexture.width < 0) {
-			_playerTexture.width = -_playerTexture.width;
-		}*/
+		if (_frameRectangle.width < 0) {
+			_frameRectangle.width = -_frameRectangle.width;
+		}
 		_playerPosition.x += _playerVelocity.x;
 	}
 	if (IsKeyDown(KEY_A) && _health > 0 && _playerPosition.x > 0 && !IsKeyDown(KEY_D) && _playerCanWalk) {
@@ -74,9 +73,9 @@ void Player::PlayerController() {
 		if (IsKeyDown(KEY_LEFT_SHIFT)) {
 			_playerVelocity.x *= 1.5;
 		}
-		/*if (_playerTexture.width > 0) {
-			_playerTexture.width = -_playerTexture.width;
-		}*/
+		if (_frameRectangle.width > 0) {
+			_frameRectangle.width = -_frameRectangle.width;
+		}
 		_playerPosition.x += _playerVelocity.x;
 	}
 	if (IsKeyPressed(KEY_SPACE) && _health > 0 && !IsKeyPressedRepeat(KEY_SPACE) && _playerCanJump) {
