@@ -11,38 +11,34 @@ int main()
 
 	SetExitKey(KEY_NULL);       // Disable KEY_ESCAPE to close window, X-button still works
 	
-	bool exitWindowRequested = false;
-	bool exitWindow = false;
 	
 	SetTargetFPS(60);
 
 	Font mainFont = LoadFont("Resources\\KHTitle.otf");
 
-	while (!exitWindow) {
+	while (!GetExitWindow()) {
 		if (WindowShouldClose() && GetCurrentMap() != 0 || IsKeyPressed(KEY_ESCAPE) && GetCurrentMap() != 0){
-			exitWindowRequested = true;
+			SetExitWindowRequest(true);
 		}
-		if (exitWindowRequested)
+		if (GetExitWindowRequest)
 		{
 			if (IsKeyPressed(KEY_Y)) {
-				exitWindow = true;
+				SetExitWindow(true);
 			}
 			else if (IsKeyPressed(KEY_N)){
-				exitWindowRequested = false;
+				SetExitWindowRequest(false);
 			}
 		}
 		
 		BeginDrawing();
 		ClearBackground(DARKGRAY);
 		
-		if (exitWindowRequested){
-			DrawRectangle(GetMonitorWidth(GetCurrentMonitor()) / 2 - 400, GetMonitorHeight(GetCurrentMonitor()) / 2 - 80, 880, 50, WHITE);
-			DrawTextEx(mainFont, "ARE YOU SURE YOU  WANT TO QUIT THE GAME? ( Y / N )", { (float)GetMonitorWidth(GetCurrentMonitor()) / 2 - 390 , (float)GetMonitorHeight(GetCurrentMonitor()) / 2 - 70 }, 30, 4, BLACK);
-		}
-
 		DrawMap();
 		MapLogic();
 
+		if (GetExitWindowRequest()){
+			Quit();
+		}
 
 		if (GetCurrentMap() != 0 && GetCurrentMap() != 1 ) {
 			Update();

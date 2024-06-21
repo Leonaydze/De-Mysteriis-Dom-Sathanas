@@ -67,6 +67,9 @@
     <Image Include="Resources\PlayerText.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
+    <Image Include="Resources\MAIN_MENU SCREEN.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Resources\KHTitle.otf">
