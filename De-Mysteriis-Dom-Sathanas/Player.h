@@ -30,6 +30,8 @@ private:
 	Texture2D _playerTexture;
 	Font _playerFont;
 	Rectangle _frameRectangle{ 0.0f, 0.0f, 64.0f, 64.0f };
+	
+	Sound _playerDeath;
 public:
 	Player();
 

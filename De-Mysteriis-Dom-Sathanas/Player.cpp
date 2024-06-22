@@ -28,6 +28,7 @@ Player::Player(Vector2 playerPosition) {
 	_playerPosition = playerPosition;
 	_playerTexture = LoadTexture("Resources\\PlayerText.png");
 	_playerFont = LoadFont("Resources\\KHTitle.otf");
+	_playerDeath = LoadSound("Resources\\PlayerDeath.wav");
 }
 
 void Player::SetPlayerPosition(Vector2 playerPosition){
@@ -146,5 +147,6 @@ void Player::PlayerDeath(){
 	if (_health <= 0) {
 		DrawTextEx(_playerFont, "YOU ARE DEAD", { _playerPosition.x - 200, _playerPosition.y - 500 }, 50, 4, WHITE);
 		DrawTextEx(_playerFont,"PRESS ESC TO QUIT", { _playerPosition.x - 270, _playerPosition.y - 450}, 50, 4,  WHITE);
+		PlaySound(_playerDeath);
 	}
 }

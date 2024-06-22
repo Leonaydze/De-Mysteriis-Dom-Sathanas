@@ -7,9 +7,11 @@
 #include "CustomColors.h"
 #include <ctime>
 
-extern GameScreen _currentScreen = LEVEL_3;
+extern GameScreen _currentScreen = MAIN_MENU;
 
 Font font;
+
+Sound PlayButton, PlayerTakesDamage, EnemyTakesDamage;
 
 Player player;
 Camera2D _playerCamera;
@@ -63,6 +65,10 @@ bool EventTriggered(double interval)
 void Init() {
 	font = LoadFont("Resources\\KHTitle.otf");
 
+	PlayButton = LoadSound("Resources\\PlayButtonSound.wav");
+	PlayerTakesDamage = LoadSound("Resources\\PlayerTakesDamage.mp3");
+	EnemyTakesDamage = LoadSound("Resources\\EnemyTakesDamage.wav");
+
 	player = Player({ 50.0f , 950.0f });
 	_playerCamera;
 
@@ -96,6 +102,7 @@ void EnemyAttacksThePlayer(Enemy &enemy) {
 		&& player.GetPlayerPositionY() >= enemy.GetEnemyPositionY() - 40
 		&& player. GetPlayerPositionY() + 64 <= enemy.GetEnemyPositionY() + 104 && enemy.GetEnemyHealth() > 0){
 		if (EventTriggered(1.0f)) {
+			PlaySound(PlayerTakesDamage);
 			player.PlayerTakesDamageFromTheEnemy(enemy.GetEnemyDamage());
 		}
 	}
@@ -107,6 +114,7 @@ void PlayerAttacksEnemy(Enemy &enemy) {
 		&& player.GetPlayerPositionY() >= enemy.GetEnemyPositionY() - 40
 		&& player.GetPlayerPositionY() + 64 <= enemy.GetEnemyPositionY() + 104) {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && EventTriggered(0.5f)) {
+			PlaySound(EnemyTakesDamage);
 			enemy.EnemyTakesDamageFromThePlayer(player.GetPlayerDamage());
 		}
 	}
@@ -156,6 +164,7 @@ void MapLogic() {
 		if ((GetMouseX() >= GetScreenWidth() / 2 - 50 && GetMouseX() <= GetScreenWidth() / 2 + 65)
 			&& (GetMouseY() >= GetScreenHeight() / 2 - 25 && GetMouseY() <= GetScreenHeight() / 2 + 25)
 			&& (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))) {
+			PlaySound(PlayButton);
 			_currentScreen = LEVEL_1;
 		}
 		if ((GetMouseX() >= GetScreenWidth() / 10 - 100 && GetMouseX() <= GetScreenWidth() / 10 + 115)

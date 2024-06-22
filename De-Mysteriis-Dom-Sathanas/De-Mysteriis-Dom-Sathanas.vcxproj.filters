@@ -76,4 +76,18 @@
       <Filter>Файлы ресурсов</Filter>
     </Font>
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resources\PlayButtonSound.wav">
+      <Filter>Файлы ресурсов</Filter>
+    </Media>
+    <Media Include="Resources\PlayerDeath.wav">
+      <Filter>Файлы ресурсов</Filter>
+    </Media>
+    <Media Include="Resources\EnemyTakesDamage.wav">
+      <Filter>Файлы ресурсов</Filter>
+    </Media>
+    <Media Include="Resources\PlayerTakesDamage.mp3">
+      <Filter>Файлы ресурсов</Filter>
+    </Media>
+  </ItemGroup>
 </Project>
