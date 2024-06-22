@@ -31,6 +31,8 @@ Enemy enemy_lv3, enemy_lv3_2, enemy_lv3_3;
 bool _exitWindowRequested = false;
 bool _exitWindow = false;
 
+int _playerKillsCount = 0;
+
 bool GetExitWindow() {
 	return _exitWindow;
 }
@@ -78,8 +80,14 @@ void Init() {
 
 	platform_2 = { { 1300 , 740 }, 256, 32, DARKGRAY };
 	enemy_lv3_2 = { { 1320 , 680 }, 100, 15 };
+}
 
-	mainBorder = { { 1900 , 700 }, 128, 5000, darkGrey };
+
+void EnemyDead(Enemy &enemy) {
+	if (enemy.GetEnemyHealth() <= 0 && !enemy.BoolCheckIsEnemyDeath()) {
+		_playerKillsCount++;
+		enemy.SetBoolCheckIsEnemyDeath(true);
+	}
 }
 
 void EnemyAttacksThePlayer(Enemy &enemy) {
@@ -185,6 +193,8 @@ void MapLogic() {
 		PlayerAttacksEnemy(enemy_lv3_2);
 		EnemyGoesToThePlayer(enemy_lv3);
 		EnemyGoesToThePlayer(enemy_lv3_2);
+		EnemyDead(enemy_lv3);
+		EnemyDead(enemy_lv3_2);
 		break;
 	}
 }
@@ -229,7 +239,6 @@ void DrawMap() {
 		platform_2.GroundDraw();
 		enemy_lv3.DrawEnemy();
 		enemy_lv3_2.DrawEnemy();
-		mainBorder.GroundDraw();
 		break;
 		EndMode2D();
 		EndDrawing();
@@ -244,13 +253,6 @@ void Update() {
 	player.PlayerController();
 	player.Draw();
 	
-	if (GetCurrentMap() == 4) {
-		PlayerCanWalk(player, mainBorder);
-	}
-
-	else {
-		player.SetBoolPlayerCanWalk(true);
-	}
 	if (player.IsPlayerJump() && !player.PlayerMaxJump() && player.GetPlayerCanJump()) {
 		player.MoveVertically();
 	}
@@ -276,6 +278,11 @@ void Update() {
 				enemy_lv3_2.EnemyMoveVerticallyDown();
 			}
 		}
+	}
+
+	if (_playerKillsCount == 2) {
+		DrawTextEx(font, "YOU PASSED THE GAME! YOU'VE WON", { (float)player.GetPlayerPositionX() - 380, (float)player.GetPlayerPositionY() - 550 }, 48, 4, WHITE);
+		DrawTextEx(font, "PRESS ESC TO QUIT", { player.GetPlayerPositionX() - 150, player.GetPlayerPositionY() - 450 }, 36, 4, WHITE);
 	}
 
 	player.PlayerDeath();

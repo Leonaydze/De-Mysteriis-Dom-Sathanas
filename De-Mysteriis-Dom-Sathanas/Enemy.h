@@ -11,6 +11,8 @@ private:
 	int _damage;
 
 	void DrawEnemyHUD();
+
+	bool _checkIsEnemyDeath = false;
 public:
 	Enemy();
 
@@ -29,5 +31,8 @@ public:
 	void EnemyTakesDamageFromThePlayer(int damage);
 
 	void EnemyMoveVerticallyDown();
+
+	bool BoolCheckIsEnemyDeath();
+	void SetBoolCheckIsEnemyDeath(bool checkIsEnemyDeath);
 };
 

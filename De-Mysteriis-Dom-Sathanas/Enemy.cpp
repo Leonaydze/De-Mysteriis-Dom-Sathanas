@@ -50,3 +50,13 @@ void Enemy::EnemyTakesDamageFromThePlayer(int damage){
 void Enemy::EnemyMoveVerticallyDown() {
 	_enemyPosition.y += 6.0f;
 }
+
+bool Enemy::BoolCheckIsEnemyDeath()
+{
+	return _checkIsEnemyDeath;
+}
+
+void Enemy::SetBoolCheckIsEnemyDeath(bool checkIsEnemyDeath){
+	_checkIsEnemyDeath = checkIsEnemyDeath;
+}
+

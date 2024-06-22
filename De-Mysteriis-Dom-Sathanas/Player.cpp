@@ -144,7 +144,7 @@ void Player::PlayerTakesDamageFromTheEnemy(int damage){
 
 void Player::PlayerDeath(){
 	if (_health <= 0) {
-		DrawText("YOU ARE DEAD", _playerPosition.x - 200, _playerPosition.y - 500, 50, WHITE);
-		DrawText("PRESS ESC TO QUIT", _playerPosition.x - 270, _playerPosition.y - 450, 50, WHITE);
+		DrawTextEx(_playerFont, "YOU ARE DEAD", { _playerPosition.x - 200, _playerPosition.y - 500 }, 50, 4, WHITE);
+		DrawTextEx(_playerFont,"PRESS ESC TO QUIT", { _playerPosition.x - 270, _playerPosition.y - 450}, 50, 4,  WHITE);
 	}
 }
