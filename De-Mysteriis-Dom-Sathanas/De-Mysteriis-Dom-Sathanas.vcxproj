@@ -153,7 +153,12 @@
     <Font Include="Resources\KHTitle.otf" />
   </ItemGroup>
   <ItemGroup>
+    <Media Include="Resources\EnemyDeath.wav" />
     <Media Include="Resources\EnemyTakesDamage.wav" />
+    <Media Include="Resources\Level_1Theme.wav" />
+    <Media Include="Resources\Level_2Theme.wav" />
+    <Media Include="Resources\Level_3Theme.wav" />
+    <Media Include="Resources\MainMenuTheme.wav" />
     <Media Include="Resources\PlayButtonSound.wav" />
     <Media Include="Resources\PlayerDeath.wav" />
     <Media Include="Resources\PlayerJump.mp3" />

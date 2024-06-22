@@ -11,7 +11,9 @@ extern GameScreen _currentScreen = MAIN_MENU;
 
 Font font;
 
+Sound EnemyDeath;
 Sound PlayButton, PlayerTakesDamage, EnemyTakesDamage, PlayerJump;
+Sound MainMenuTheme, Level_1Theme, Level_2Theme, Level_3Theme;
 
 Player player;
 Camera2D _playerCamera;
@@ -65,10 +67,17 @@ bool EventTriggered(double interval)
 void Init() {
 	font = LoadFont("Resources\\KHTitle.otf");
 
+	EnemyDeath = LoadSound("Resources\\EnemyDeath.wav");
+
 	PlayButton = LoadSound("Resources\\PlayButtonSound.wav");
 	PlayerTakesDamage = LoadSound("Resources\\PlayerTakesDamage.mp3");
 	EnemyTakesDamage = LoadSound("Resources\\EnemyTakesDamage.wav");
 	PlayerJump = LoadSound("Resources\\PlayerJump.mp3");
+
+	MainMenuTheme = LoadSound("Resources\\MainMenuTheme.wav");
+	Level_1Theme = LoadSound("Resources\\Level_1Theme.wav");
+	Level_2Theme = LoadSound("Resources\\Level_2Theme.wav");
+	Level_3Theme = LoadSound("Resources\\Level_3Theme.wav");
 
 	player = Player({ 50.0f , 950.0f });
 	_playerCamera;
@@ -94,6 +103,7 @@ void EnemyDead(Enemy &enemy) {
 	if (enemy.GetEnemyHealth() <= 0 && !enemy.BoolCheckIsEnemyDeath()) {
 		_playerKillsCount++;
 		enemy.SetBoolCheckIsEnemyDeath(true);
+		PlaySound(EnemyDeath);
 	}
 }
 
@@ -172,6 +182,9 @@ void MapLogic() {
 	switch (_currentScreen)
 	{
 	case MAIN_MENU:
+		if (!IsSoundPlaying(MainMenuTheme)) {
+			PlaySound(MainMenuTheme);
+		}
 		if ((GetMouseX() >= GetScreenWidth() / 2 - 50 && GetMouseX() <= GetScreenWidth() / 2 + 65)
 			&& (GetMouseY() >= GetScreenHeight() / 2 - 25 && GetMouseY() <= GetScreenHeight() / 2 + 25)
 			&& (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))) {
@@ -189,6 +202,12 @@ void MapLogic() {
 		}
 		break;
 	case LEVEL_1:
+		if (IsSoundPlaying(MainMenuTheme)) {
+			StopSound(MainMenuTheme);
+		}
+		if (!IsSoundPlaying(Level_1Theme)) {
+			PlaySound(Level_1Theme);
+		}
 		PlayerAttacksPugalo(pugalo);
 		if (player.GetPlayerPositionX() + 64 >= door.DoorPositionX() && player.GetPlayerPositionX() <= door.DoorPositionX() + 80 &&
 			player.GetPlayerPositionY() >= door.DoorPositionY() && player.GetPlayerPositionY() + 64 <= door.DoorPositionY() + 128){
@@ -197,6 +216,12 @@ void MapLogic() {
 		}
 		break;
 	case LEVEL_2:
+		if (IsSoundPlaying(Level_1Theme)) {
+			StopSound(Level_1Theme);
+		}
+		if (!IsSoundPlaying(Level_2Theme)) {
+			PlaySound(Level_2Theme);
+		}
 		EnemyGoesToThePlayer(enemy_lv2);
 		EnemyAttacksThePlayer(enemy_lv2);
 		PlayerAttacksEnemy(enemy_lv2);
@@ -208,6 +233,12 @@ void MapLogic() {
 		}
 		break;
 	case LEVEL_3:
+		if (!IsSoundPlaying(Level_2Theme)) {
+			StopSound(Level_2Theme);
+		}
+		if (!IsSoundPlaying(Level_3Theme)) {
+			PlaySound(Level_3Theme);
+		}
 		EnemyAttacksThePlayer(enemy_lv3);
 		EnemyAttacksThePlayer(enemy_lv3_2);
 		PlayerAttacksEnemy(enemy_lv3);
@@ -307,7 +338,7 @@ void Update() {
 		}
 	}
 
-	if (_playerKillsCount == 2) {
+	if (_playerKillsCount == 3) {
 		DrawTextEx(font, "YOU PASSED THE GAME! YOU'VE WON", { (float)player.GetPlayerPositionX() - 380, (float)player.GetPlayerPositionY() - 550 }, 48, 4, WHITE);
 		DrawTextEx(font, "PRESS ESC TO QUIT", { player.GetPlayerPositionX() - 150, player.GetPlayerPositionY() - 450 }, 36, 4, WHITE);
 	}

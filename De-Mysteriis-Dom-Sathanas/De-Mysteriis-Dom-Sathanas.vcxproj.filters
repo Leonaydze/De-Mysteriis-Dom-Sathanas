@@ -16,6 +16,9 @@
     <Filter Include="Файлы ресурсов\Sounds">
       <UniqueIdentifier>{0ff8b568-283c-47b7-b71c-27dfd5203dd0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы ресурсов\Music">
+      <UniqueIdentifier>{2fbbf8cc-cad5-4949-a427-2092b3e74d27}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="De-Mysteriis-Dom-Sathanas.cpp">
@@ -93,6 +96,21 @@
       <Filter>Файлы ресурсов\Sounds</Filter>
     </Media>
     <Media Include="Resources\PlayerJump.mp3">
+      <Filter>Файлы ресурсов\Sounds</Filter>
+    </Media>
+    <Media Include="Resources\Level_1Theme.wav">
+      <Filter>Файлы ресурсов\Music</Filter>
+    </Media>
+    <Media Include="Resources\Level_2Theme.wav">
+      <Filter>Файлы ресурсов\Music</Filter>
+    </Media>
+    <Media Include="Resources\Level_3Theme.wav">
+      <Filter>Файлы ресурсов\Music</Filter>
+    </Media>
+    <Media Include="Resources\MainMenuTheme.wav">
+      <Filter>Файлы ресурсов\Music</Filter>
+    </Media>
+    <Media Include="Resources\EnemyDeath.wav">
       <Filter>Файлы ресурсов\Sounds</Filter>
     </Media>
   </ItemGroup>
