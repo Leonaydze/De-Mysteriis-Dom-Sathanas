@@ -225,15 +225,18 @@ void MapLogic() {
 		EnemyGoesToThePlayer(enemy_lv2);
 		EnemyAttacksThePlayer(enemy_lv2);
 		PlayerAttacksEnemy(enemy_lv2);
-		if (player.GetPlayerPositionX() + 64 >= door.DoorPositionX() && player.GetPlayerPositionX() <= door.DoorPositionX() + 80 &&
-			player.GetPlayerPositionY() >= door.DoorPositionY() && player.GetPlayerPositionY() + 64 <= door.DoorPositionY() + 128) {
-			player.PlayerTakesDamageFromTheEnemy(-(100 - player.GetPlayerHealth()));
-			_currentScreen = LEVEL_3;
-			player.SetPlayerPosition({ 50.0f , 950.0f });
+		EnemyDead(enemy_lv2);
+		if (_playerKillsCount == 1) {
+			if (player.GetPlayerPositionX() + 64 >= door.DoorPositionX() && player.GetPlayerPositionX() <= door.DoorPositionX() + 80 &&
+				player.GetPlayerPositionY() >= door.DoorPositionY() && player.GetPlayerPositionY() + 64 <= door.DoorPositionY() + 128) {
+				player.PlayerTakesDamageFromTheEnemy(-(100 - player.GetPlayerHealth()));
+				_currentScreen = LEVEL_3;
+				player.SetPlayerPosition({ 50.0f , 950.0f });
+			}
 		}
 		break;
 	case LEVEL_3:
-		if (!IsSoundPlaying(Level_2Theme)) {
+		if (IsSoundPlaying(Level_2Theme)) {
 			StopSound(Level_2Theme);
 		}
 		if (!IsSoundPlaying(Level_3Theme)) {
@@ -285,7 +288,9 @@ void DrawMap() {
 		mainGroundFloor.GroundDraw();
 		DrawTextEx(font, "LEVEL_1", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
 		enemy_lv2.DrawEnemy();
-		door.DrawDoor();
+		if (_playerKillsCount == 1) {
+			door.DrawDoor();
+		}
 		break;
 	case LEVEL_3:
 		BeginMode2D(_playerCamera);
