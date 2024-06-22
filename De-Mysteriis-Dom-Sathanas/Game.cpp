@@ -73,12 +73,12 @@ void Init() {
 	player = Player({ 50.0f , 950.0f });
 	_playerCamera;
 
-	pugalo = Pugalo({ 2500.0f , 930.0f});
+	pugalo = Pugalo({ 2200.0f , 930.0f});
 
-	mainGroundFloor = { { 0 , 1000 } , 5000, 1500, darkGrey };
+	mainGroundFloor = { { -1000 , 1000 } , 5400, 1500, darkGrey };
 	leftBorder = { { -1000.0f , 0.0f }, 1000, 5000, DARKGRAY };
 
-	door = Door( { 2700 , 900 } );
+	door = Door( { 3000 , 900 } );
 
 	enemy_lv2 = { { 1488.0f , 950.0f }, 100, 15 };
 
@@ -117,6 +117,16 @@ void PlayerAttacksEnemy(Enemy &enemy) {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && EventTriggered(0.5f)) {
 			PlaySound(EnemyTakesDamage);
 			enemy.EnemyTakesDamageFromThePlayer(player.GetPlayerDamage());
+		}
+	}
+}
+
+void PlayerAttacksPugalo(Pugalo& pugalo) {
+	if (player.GetPlayerPositionX() + 64 >= pugalo.GetPugaloPositionX() - 70
+		&& player.GetPlayerPositionX() <= pugalo.GetPugaloPositionX() + 134
+		&& player.GetPlayerPositionY() >= pugalo.GetPugaloPositionY() - 40) {
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && EventTriggered(0.5f)) {
+			PlaySound(EnemyTakesDamage);
 		}
 	}
 }
@@ -179,6 +189,7 @@ void MapLogic() {
 		}
 		break;
 	case LEVEL_1:
+		PlayerAttacksPugalo(pugalo);
 		if (player.GetPlayerPositionX() + 64 >= door.DoorPositionX() && player.GetPlayerPositionX() <= door.DoorPositionX() + 80 &&
 			player.GetPlayerPositionY() >= door.DoorPositionY() && player.GetPlayerPositionY() + 64 <= door.DoorPositionY() + 128){
 			_currentScreen = LEVEL_2;
@@ -232,23 +243,28 @@ void DrawMap() {
 		DrawTextEx(font, "LEVEL_1", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
 		pugalo.Draw();
 		door.DrawDoor();
+		DrawTextEx(font, "Press WASD to move", { 200, 600 }, 36, 4, WHITE);
+		DrawTextEx(font, "HOLD SHIFT to move FASTER", { 800, 600 }, 36, 4, WHITE);
+		DrawTextEx(font, "Press left-click to attack", { 1900, 600 }, 36, 4, WHITE);
+		DrawTextEx(font, "Go through the door to start the game", { 2600, 600 }, 36, 4, WHITE);
 		break;
 	case LEVEL_2:
 		BeginMode2D(_playerCamera);
 		DrawTextEx(font, "LEVEL_2", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
 		mainGroundFloor.GroundDraw();
+		leftBorder.GroundDraw();
 		enemy_lv2.DrawEnemy();
 		door.DrawDoor();
 		break;
 	case LEVEL_3:
 		BeginMode2D(_playerCamera);
 		mainGroundFloor.GroundDraw();
-		leftBorder.GroundDraw();
 		DrawTextEx(font, "LEVEL_3", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
 		platform.GroundDraw();
 		platform_2.GroundDraw();
 		enemy_lv3.DrawEnemy();
 		enemy_lv3_2.DrawEnemy();
+		DrawTextEx(font, "Go right", { 0, 600 }, 48, 4, WHITE);
 		break;
 		EndMode2D();
 		EndDrawing();

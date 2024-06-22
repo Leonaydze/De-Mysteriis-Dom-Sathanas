@@ -12,5 +12,8 @@ public:
 
 	Pugalo(Vector2 pugaloPosition);
 
+	float GetPugaloPositionX();
+	float GetPugaloPositionY();
+
 	void Draw();
 };

@@ -21,3 +21,14 @@ Pugalo::Pugalo() {
 Pugalo::Pugalo(Vector2 pugaloPosition){
 	_pugaloPosition = pugaloPosition;
 }
+
+float Pugalo::GetPugaloPositionX()
+{
+	return _pugaloPosition.x;
+}
+
+float Pugalo::GetPugaloPositionY()
+{
+	return _pugaloPosition.y;
+}
+

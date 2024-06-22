@@ -59,7 +59,7 @@ void Player::PlayerController() {
 	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && _health > 0) {
 		SetRandomDamage();
 	}
-	if (IsKeyDown(KEY_D) && _health > 0 && _playerPosition.x < GetMonitorWidth(GetCurrentMonitor()) + 1000 && !IsKeyDown(KEY_A) && _playerCanWalk) {
+	if (IsKeyDown(KEY_D) && _health > 0 && _playerPosition.x < GetMonitorWidth(GetCurrentMonitor()) + 1200 && !IsKeyDown(KEY_A) && _playerCanWalk) {
 		_playerVelocity.x += _playerSpeed;
 		if (IsKeyDown(KEY_LEFT_SHIFT)) {
 			_playerVelocity.x *= 1.5;
