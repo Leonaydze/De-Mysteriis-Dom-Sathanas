@@ -73,7 +73,7 @@ void Init() {
 	player = Player({ 50.0f , 950.0f });
 	_playerCamera;
 
-	pugalo = Pugalo({ 2200.0f , 930.0f});
+	pugalo = Pugalo({ 2150.0f , 930.0f});
 
 	mainGroundFloor = { { -1000 , 1000 } , 5400, 1500, darkGrey };
 	leftBorder = { { -1000.0f , 0.0f }, 1000, 5000, DARKGRAY };
@@ -238,21 +238,21 @@ void DrawMap() {
 		break;
 	case LEVEL_1:
 		BeginMode2D(_playerCamera);
-		mainGroundFloor.GroundDraw();
 		leftBorder.GroundDraw();
-		DrawTextEx(font, "LEVEL_1", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
+		mainGroundFloor.GroundDraw();
+		DrawTextEx(font, "TUTORIAL", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
 		pugalo.Draw();
 		door.DrawDoor();
 		DrawTextEx(font, "Press WASD to move", { 200, 600 }, 36, 4, WHITE);
 		DrawTextEx(font, "HOLD SHIFT to move FASTER", { 800, 600 }, 36, 4, WHITE);
 		DrawTextEx(font, "Press left-click to attack", { 1900, 600 }, 36, 4, WHITE);
-		DrawTextEx(font, "Go through the door to start the game", { 2600, 600 }, 36, 4, WHITE);
+		DrawTextEx(font, "Go through the door to start the game", { 2650, 600 }, 36, 4, WHITE);
 		break;
 	case LEVEL_2:
 		BeginMode2D(_playerCamera);
-		DrawTextEx(font, "LEVEL_2", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
-		mainGroundFloor.GroundDraw();
 		leftBorder.GroundDraw();
+		mainGroundFloor.GroundDraw();
+		DrawTextEx(font, "LEVEL_1", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
 		enemy_lv2.DrawEnemy();
 		door.DrawDoor();
 		break;
