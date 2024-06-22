@@ -287,9 +287,7 @@ void DrawMap() {
 		mainGroundFloor.GroundDraw();
 		DrawTextEx(font, "LEVEL_1", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
 		enemy_lv2.DrawEnemy();
-		if (_playerKillsCount == 1) {
-			door.DrawDoor();
-		}
+		DrawTextEx(font, "->", { 3000 , 800 }, 48, 4, WHITE);
 		break;
 	case LEVEL_3:
 		BeginMode2D(_playerCamera);
