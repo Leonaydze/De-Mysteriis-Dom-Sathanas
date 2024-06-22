@@ -11,7 +11,7 @@ extern GameScreen _currentScreen = MAIN_MENU;
 
 Font font;
 
-Sound PlayButton, PlayerTakesDamage, EnemyTakesDamage;
+Sound PlayButton, PlayerTakesDamage, EnemyTakesDamage, PlayerJump;
 
 Player player;
 Camera2D _playerCamera;
@@ -68,6 +68,7 @@ void Init() {
 	PlayButton = LoadSound("Resources\\PlayButtonSound.wav");
 	PlayerTakesDamage = LoadSound("Resources\\PlayerTakesDamage.mp3");
 	EnemyTakesDamage = LoadSound("Resources\\EnemyTakesDamage.wav");
+	PlayerJump = LoadSound("Resources\\PlayerJump.mp3");
 
 	player = Player({ 50.0f , 950.0f });
 	_playerCamera;
@@ -267,10 +268,11 @@ void Update() {
 	}
 	else if (PlayerOnGround(player, mainGroundFloor)) {
 		player.SetPlayerCanJump(true);
+		PlaySound(PlayerJump);
 	}
-	else if ( GetCurrentMap() == 4 && (PlayerOnGround(player, platform) || PlayerOnGround(player, platform_2)
-		|| PlayerOnGround(player, mainBorder))) {
+	else if ( GetCurrentMap() == 4 && (PlayerOnGround(player, platform) || PlayerOnGround(player, platform_2))) {
 		player.SetPlayerCanJump(true);
+		PlaySound(PlayerJump);
 	}
 	else if (player.PlayerMaxJump() || !player.IsPlayerJump()) {
 		player.MoveVerticallyDown();

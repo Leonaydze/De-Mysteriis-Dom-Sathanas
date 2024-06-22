@@ -156,6 +156,7 @@
     <Media Include="Resources\EnemyTakesDamage.wav" />
     <Media Include="Resources\PlayButtonSound.wav" />
     <Media Include="Resources\PlayerDeath.wav" />
+    <Media Include="Resources\PlayerJump.mp3" />
     <Media Include="Resources\PlayerTakesDamage.mp3" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
