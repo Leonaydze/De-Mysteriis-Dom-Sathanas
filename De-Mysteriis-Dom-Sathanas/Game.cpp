@@ -254,7 +254,6 @@ void MapLogic() {
 	}
 }
 
-
 void DrawMap() {
 	BeginDrawing();
 	ClearBackground(BLACK);
