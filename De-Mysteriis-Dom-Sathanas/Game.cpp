@@ -259,7 +259,7 @@ void DrawMap() {
 	case LEVEL_3:
 		BeginMode2D(_playerCamera);
 		mainGroundFloor.GroundDraw();
-		DrawTextEx(font, "LEVEL_3", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
+		DrawTextEx(font, "LEVEL_2", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
 		platform.GroundDraw();
 		platform_2.GroundDraw();
 		enemy_lv3.DrawEnemy();
