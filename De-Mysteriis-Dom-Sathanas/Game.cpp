@@ -186,7 +186,7 @@ void MapLogic() {
 			PlaySound(MainMenuTheme);
 		}
 		if ((GetMouseX() >= GetScreenWidth() / 2 - 50 && GetMouseX() <= GetScreenWidth() / 2 + 65)
-			&& (GetMouseY() >= GetScreenHeight() / 2 - 25 && GetMouseY() <= GetScreenHeight() / 2 + 25)
+			&& (GetMouseY() >= GetScreenHeight() / 2 - 35 && GetMouseY() <= GetScreenHeight() / 2 + 25)
 			&& (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))) {
 			PlaySound(PlayButton);
 			_currentScreen = LEVEL_1;
@@ -261,11 +261,11 @@ void DrawMap() {
 	switch (_currentScreen)
 	{
 	case MAIN_MENU:
-		DrawTextEx(font, "MAIN_MENU", { 20, 20 }, 40, 2, WHITE);
-		DrawRectangle(GetScreenWidth() / 2 - 50, GetScreenHeight() / 2 - 25, 115, 50, WHITE);
-		DrawTextEx(font, "Play", {(float) GetScreenWidth() / 2 - 45, (float)GetScreenHeight() / 2 - 20 }, 42, 4, BLACK);
+		DrawTextEx(font, "MAIN MENU", { (float)GetScreenWidth() / 2 - 100, (float)GetScreenHeight() / 2 - 70 }, 40, 2, WHITE);
+		DrawRectangle(GetScreenWidth() / 2 - 50, GetScreenHeight() / 2 - 15, 115, 50, WHITE);
+		DrawTextEx(font, "Play", {(float) GetScreenWidth() / 2 - 45, (float)GetScreenHeight() / 2 - 10 }, 42, 4, BLACK);
 		DrawTextEx(font, "DE-MYSTERIIS-DOM-SATHANAS", { (float)GetScreenWidth() / 2 - 450, (float)GetScreenHeight() / 2 - 500 }, 64, 4, WHITE);
-		DrawTextEx(font, "by FILOSOFEM STUDIO", { (float)GetScreenWidth() / 2 - 280, (float)GetScreenHeight() / 2 - 400 }, 58, 4, WHITE);
+		DrawTextEx(font, "by FILOSOFEM STUDIO", { (float)GetScreenWidth() / 2 - 175, (float)GetScreenHeight() - 100 }, 32, 4, WHITE);
 		DrawRectangle(GetScreenWidth() / 10 - 100, GetScreenHeight() - 100, 115, 50, WHITE);
 		DrawTextEx(font, "QUIT", { (float)GetScreenWidth() / 10 - 95, (float)GetScreenHeight() - 95 }, 42, 4, BLACK);
 		break;
@@ -285,14 +285,14 @@ void DrawMap() {
 		BeginMode2D(_playerCamera);
 		leftBorder.GroundDraw();
 		mainGroundFloor.GroundDraw();
-		DrawTextEx(font, "LEVEL_1", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
+		DrawTextEx(font, "LEVEL 1", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
 		enemy_lv2.DrawEnemy();
 		DrawTextEx(font, "->", { 3000 , 800 }, 48, 4, WHITE);
 		break;
 	case LEVEL_3:
 		BeginMode2D(_playerCamera);
 		mainGroundFloor.GroundDraw();
-		DrawTextEx(font, "LEVEL_2", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
+		DrawTextEx(font, "LEVEL 2", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
 		platform.GroundDraw();
 		platform_2.GroundDraw();
 		enemy_lv3.DrawEnemy();

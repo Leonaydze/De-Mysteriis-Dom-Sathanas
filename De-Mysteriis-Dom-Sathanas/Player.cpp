@@ -4,7 +4,7 @@ void Player::SetRandomDamage()
 {
 	_damage = 0;
 	_damage = rand() % 30;
-	std::cout << _damage << std::endl;
+	std::cout << "Damage: " << _damage << std::endl;
 }
 
 void Player::MissAttack(){
