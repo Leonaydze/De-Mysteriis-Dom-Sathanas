@@ -23,14 +23,14 @@ Pugalo pugalo;
 Ground mainGroundFloor;
 Ground leftBorder;
 
-Ground platform, platform_2;
+Ground platform, platform_2, platform_3, platform_4;
 
 Ground mainBorder;
 
 Door door;
 
 Enemy enemy_lv2;
-Enemy enemy_lv3, enemy_lv3_2, enemy_lv3_3;
+Enemy enemy_lv3, enemy_lv3_2, enemy_lv3_3, enemy_lv3_4;
 
 bool _exitWindowRequested = false;
 bool _exitWindow = false;
@@ -98,6 +98,12 @@ void Init() {
 
 	platform_2 = { { 1300 , 740 }, 256, 32, DARKGRAY };
 	enemy_lv3_2 = { { 1320 , 680 }, 100, 15 };
+
+	platform_3 = { { 2300 , 740 }, 256, 32, DARKGRAY };
+	enemy_lv3_3 = { { 2400 , 680 }, 100, 15 };
+
+	platform_4 = { { 2700 , 860 }, 256, 32, DARKGRAY };
+	enemy_lv3_4 = { { 2800 , 800 }, 100, 15 };
 }
 
 
@@ -191,6 +197,13 @@ void PlayerCanWalk(Player player, Ground &ground) {
 	}
 }
 
+void AttackEnemyAndPlayer(Enemy &enemy) {
+	EnemyAttacksThePlayer(enemy);
+	PlayerAttacksEnemy(enemy);
+	EnemyGoesToThePlayer(enemy);
+	EnemyDead(enemy);
+}
+
 void MapLogic() {
 	_playerCamera.target = {player.GetPlayerPositionX(), player.GetPlayerPositionY() - 200};
 	_playerCamera.offset = { 1920.0f / 2.0f, 1080.0f / 2.0f };
@@ -240,10 +253,7 @@ void MapLogic() {
 		if (!IsSoundPlaying(Level_2Theme)) {
 			PlaySound(Level_2Theme);
 		}
-		EnemyGoesToThePlayer(enemy_lv2);
-		EnemyAttacksThePlayer(enemy_lv2);
-		PlayerAttacksEnemy(enemy_lv2);
-		EnemyDead(enemy_lv2);
+		AttackEnemyAndPlayer(enemy_lv2);
 		if (_playerKillsCount == 1) {
 			if (player.GetPlayerPositionX() + 64 >= door.DoorPositionX() && player.GetPlayerPositionX() <= door.DoorPositionX() + 80 &&
 				player.GetPlayerPositionY() >= door.DoorPositionY() && player.GetPlayerPositionY() + 64 <= door.DoorPositionY() + 128) {
@@ -260,14 +270,10 @@ void MapLogic() {
 		if (!IsSoundPlaying(Level_3Theme)) {
 			PlaySound(Level_3Theme);
 		}
-		EnemyAttacksThePlayer(enemy_lv3);
-		EnemyAttacksThePlayer(enemy_lv3_2);
-		PlayerAttacksEnemy(enemy_lv3);
-		PlayerAttacksEnemy(enemy_lv3_2);
-		EnemyGoesToThePlayer(enemy_lv3);
-		EnemyGoesToThePlayer(enemy_lv3_2);
-		EnemyDead(enemy_lv3);
-		EnemyDead(enemy_lv3_2);
+		AttackEnemyAndPlayer(enemy_lv3);
+		AttackEnemyAndPlayer(enemy_lv3_2);
+		AttackEnemyAndPlayer(enemy_lv3_3);
+		AttackEnemyAndPlayer(enemy_lv3_4);
 		break;
 	}
 }
@@ -315,8 +321,12 @@ void DrawMap() {
 		DrawTextEx(font, "LEVEL 2", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
 		platform.GroundDraw();
 		platform_2.GroundDraw();
+		platform_3.GroundDraw();
+		platform_4.GroundDraw();
 		enemy_lv3.DrawEnemy();
 		enemy_lv3_2.DrawEnemy();
+		enemy_lv3_3.DrawEnemy();
+		enemy_lv3_4.DrawEnemy();
 		DrawTextEx(font, "Go right", { 0, 600 }, 48, 4, WHITE);
 		break;
 		EndMode2D();
@@ -339,7 +349,7 @@ void Update() {
 		player.SetPlayerCanJump(true);
 		PlaySound(PlayerJump);
 	}
-	else if ( GetCurrentMap() == 4 && (PlayerOnGround(player, platform) || PlayerOnGround(player, platform_2))) {
+	else if ( GetCurrentMap() == 4 && (PlayerOnGround(player, platform) || PlayerOnGround(player, platform_2) || PlayerOnGround(player, platform_3))) {
 		player.SetPlayerCanJump(true);
 		PlaySound(PlayerJump);
 	}
@@ -353,14 +363,26 @@ void Update() {
 		}
 	}
 	if (!EnemyOnGround(enemy_lv3_2, platform_2)) {
-		if (!EnemyOnGround(enemy_lv3, platform)) {
+		if (!EnemyOnGround(enemy_lv3_2, platform)) {
 			if (!EnemyOnGround(enemy_lv3_2, mainGroundFloor)) {
 				enemy_lv3_2.EnemyMoveVerticallyDown();
 			}
 		}
 	}
+	if (!EnemyOnGround(enemy_lv3_3, platform_3)) {
+		if (!EnemyOnGround(enemy_lv3_3, platform_4)) {
+			if (!EnemyOnGround(enemy_lv3_3, mainGroundFloor)) {
+				enemy_lv3_3.EnemyMoveVerticallyDown();
+			}
+		}
+	}
+	if (!EnemyOnGround(enemy_lv3_4, platform_4)) {
+		if (!EnemyOnGround(enemy_lv3_4, mainGroundFloor)) {
+			enemy_lv3_4.EnemyMoveVerticallyDown();
+		}
+	}
 
-	if (_playerKillsCount == 3) {
+	if (_playerKillsCount == 5) {
 		DrawTextEx(font, "YOU PASSED THE GAME! YOU'VE WON", { (float)player.GetPlayerPositionX() - 380, (float)player.GetPlayerPositionY() - 550 }, 48, 4, WHITE);
 		DrawTextEx(font, "PRESS ESC TO QUIT", { player.GetPlayerPositionX() - 150, player.GetPlayerPositionY() - 450 }, 36, 4, WHITE);
 	}
