@@ -311,6 +311,7 @@ void DrawMap() {
 		mainGroundFloor.GroundDraw();
 		DrawTextEx(font, "LEVEL 1", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
 		enemy_lv2.DrawEnemy();
+		DrawTextEx(font, "Kill him to pass on", { 800, 600 }, 36, 4, WHITE);
 		if (_playerKillsCount == 1) {
 			DrawTextEx(font, "->", { 3000 , 800 }, 48, 4, WHITE);
 		}
