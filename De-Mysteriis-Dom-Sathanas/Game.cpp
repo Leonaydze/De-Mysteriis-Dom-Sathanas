@@ -12,7 +12,7 @@ extern GameScreen _currentScreen = MAIN_MENU;
 Font font;
 
 Sound EnemyDeath;
-Sound PlayButton, PlayerTakesDamage, EnemyTakesDamage, PlayerJump;
+Sound PlayButton, PlayerTakesDamage, EnemyTakesDamage, EnemyTakesDamage_2, EnemyTakesDamage_3, PlayerJump;
 Sound MainMenuTheme, Level_1Theme, Level_2Theme, Level_3Theme;
 
 Player player;
@@ -72,6 +72,8 @@ void Init() {
 	PlayButton = LoadSound("Resources\\PlayButtonSound.wav");
 	PlayerTakesDamage = LoadSound("Resources\\PlayerTakesDamage.mp3");
 	EnemyTakesDamage = LoadSound("Resources\\EnemyTakesDamage.wav");
+	EnemyTakesDamage_2 = LoadSound("Resources\\EnemyTakesDamage_2.wav");
+	EnemyTakesDamage_3 = LoadSound("Resources\\EnemyTakesDamage_3.wav");
 	PlayerJump = LoadSound("Resources\\PlayerJump.mp3");
 
 	MainMenuTheme = LoadSound("Resources\\MainMenuTheme.wav");
@@ -119,13 +121,29 @@ void EnemyAttacksThePlayer(Enemy &enemy) {
 	}
 }
 
+void SoundEnemyTakesDamage() {
+	int choice = rand() % 3;
+
+	switch (choice){
+		case 0:
+			PlaySound(EnemyTakesDamage);
+			break;
+		case 1:
+			PlaySound(EnemyTakesDamage_2);
+			break;
+		case 2:
+			PlaySound(EnemyTakesDamage_3);
+			break;
+	}
+}
+
 void PlayerAttacksEnemy(Enemy &enemy) {
 	if (player.GetPlayerPositionX() + 64 >= enemy.GetEnemyPositionX() - 70
 		&& player.GetPlayerPositionX() <= enemy.GetEnemyPositionX() + 134
 		&& player.GetPlayerPositionY() >= enemy.GetEnemyPositionY() - 40
 		&& player.GetPlayerPositionY() + 64 <= enemy.GetEnemyPositionY() + 104) {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && EventTriggered(0.5f)) {
-			PlaySound(EnemyTakesDamage);
+			SoundEnemyTakesDamage();
 			enemy.EnemyTakesDamageFromThePlayer(player.GetPlayerDamage());
 		}
 	}
@@ -136,7 +154,7 @@ void PlayerAttacksPugalo(Pugalo& pugalo) {
 		&& player.GetPlayerPositionX() <= pugalo.GetPugaloPositionX() + 134
 		&& player.GetPlayerPositionY() >= pugalo.GetPugaloPositionY() - 40) {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && EventTriggered(0.5f)) {
-			PlaySound(EnemyTakesDamage);
+			SoundEnemyTakesDamage();
 		}
 	}
 }
@@ -287,7 +305,9 @@ void DrawMap() {
 		mainGroundFloor.GroundDraw();
 		DrawTextEx(font, "LEVEL 1", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
 		enemy_lv2.DrawEnemy();
-		DrawTextEx(font, "->", { 3000 , 800 }, 48, 4, WHITE);
+		if (_playerKillsCount == 1) {
+			DrawTextEx(font, "->", { 3000 , 800 }, 48, 4, WHITE);
+		}
 		break;
 	case LEVEL_3:
 		BeginMode2D(_playerCamera);

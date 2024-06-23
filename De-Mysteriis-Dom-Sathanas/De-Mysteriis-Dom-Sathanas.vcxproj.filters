@@ -113,5 +113,11 @@
     <Media Include="Resources\EnemyDeath.wav">
       <Filter>Файлы ресурсов\Sounds</Filter>
     </Media>
+    <Media Include="Resources\EnemyTakesDamage_2.wav">
+      <Filter>Файлы ресурсов\Sounds</Filter>
+    </Media>
+    <Media Include="Resources\EnemyTakesDamage_3.wav">
+      <Filter>Файлы ресурсов\Sounds</Filter>
+    </Media>
   </ItemGroup>
 </Project>

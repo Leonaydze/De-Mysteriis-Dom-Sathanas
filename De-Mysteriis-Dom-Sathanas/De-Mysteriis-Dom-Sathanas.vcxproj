@@ -155,6 +155,8 @@
   <ItemGroup>
     <Media Include="Resources\EnemyDeath.wav" />
     <Media Include="Resources\EnemyTakesDamage.wav" />
+    <Media Include="Resources\EnemyTakesDamage_2.wav" />
+    <Media Include="Resources\EnemyTakesDamage_3.wav" />
     <Media Include="Resources\Level_1Theme.wav" />
     <Media Include="Resources\Level_2Theme.wav" />
     <Media Include="Resources\Level_3Theme.wav" />
