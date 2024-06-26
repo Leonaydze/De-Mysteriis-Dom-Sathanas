@@ -68,5 +68,6 @@ public:
 	void PlayerDeath();
 
 	void SetFrameRecX(float x);
+	void SetFrameRecWidth(float width);
 	bool EventTriggered(double interval);
 };
