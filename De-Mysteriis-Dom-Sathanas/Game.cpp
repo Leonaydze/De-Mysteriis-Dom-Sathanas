@@ -7,7 +7,7 @@
 #include "CustomColors.h"
 #include <ctime>
 
-extern GameScreen _currentScreen = LEVEL_3;
+extern GameScreen _currentScreen = MAIN_MENU;
 
 Font font;
 
@@ -256,10 +256,10 @@ void MapLogic() {
 			PlaySound(Level_1Theme);
 		}
 		PlayerAttacksPugalo(pugalo);
-		if (player.GetPlayerPositionX() + 64 >= door.DoorPositionX() && player.GetPlayerPositionX() <= door.DoorPositionX() + 80 &&
-			player.GetPlayerPositionY() >= door.DoorPositionY() && player.GetPlayerPositionY() + 64 <= door.DoorPositionY() + 128){
+		if (player.GetPlayerPositionX() + 128 >= door.DoorPositionX() && player.GetPlayerPositionX() <= door.DoorPositionX() + 80 &&
+			player.GetPlayerPositionY() >= door.DoorPositionY() - 40 && player.GetPlayerPositionY() + 128 <= door.DoorPositionY() + 128){
 			_currentScreen = LEVEL_2;
-			player.SetPlayerPosition({ 50.0f , 950.0f });
+			player.SetPlayerPosition({ 50.0f , 900.0f });
 		}
 		break;
 	case LEVEL_2:
@@ -271,8 +271,8 @@ void MapLogic() {
 		}
 		AttackEnemyAndPlayer(enemy_lv2);
 		if (_playerKillsCount == 1) {
-			if (player.GetPlayerPositionX() + 64 >= door.DoorPositionX() && player.GetPlayerPositionX() <= door.DoorPositionX() + 80 &&
-				player.GetPlayerPositionY() >= door.DoorPositionY() && player.GetPlayerPositionY() + 64 <= door.DoorPositionY() + 128) {
+			if (player.GetPlayerPositionX() + 128 >= door.DoorPositionX() && player.GetPlayerPositionX() <= door.DoorPositionX() + 80 &&
+				player.GetPlayerPositionY() >= door.DoorPositionY() - 40 && player.GetPlayerPositionY() + 128 <= door.DoorPositionY() + 128) {
 				player.PlayerTakesDamageFromTheEnemy(-(100 - player.GetPlayerHealth()));
 				_currentScreen = LEVEL_3;
 				player.SetPlayerPosition({ 50.0f , 900.0f });
@@ -365,7 +365,7 @@ void Update() {
 		player.SetPlayerCanJump(true);
 		PlaySound(PlayerJump);
 	}
-	else if ( GetCurrentMap() == 4 && (PlayerOnGround(player, platform) || PlayerOnGround(player, platform_2) || PlayerOnGround(player, platform_3))) {
+	else if ( GetCurrentMap() == 4 && (PlayerOnGround(player, platform) || PlayerOnGround(player, platform_2) || PlayerOnGround(player, platform_3) || PlayerOnGround(player, platform_4))) {
 		player.SetPlayerCanJump(true);
 		PlaySound(PlayerJump);
 	}
