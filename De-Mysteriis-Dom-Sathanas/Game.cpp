@@ -71,7 +71,7 @@ void Init() {
 
 	background_1 = LoadTexture("Resources\\background_1.png");
 	background_1.width *= 2;
-	background_2 = LoadTexture("Resources\\background_2.jpg");
+	background_2 = LoadTexture("Resources\\background_2.png");
 	background_2.width *= 2;
 
 	EnemyDeath = LoadSound("Resources\\EnemyDeath.wav");
@@ -317,7 +317,7 @@ void DrawMap() {
 		break;
 	case LEVEL_2:
 		BeginMode2D(_playerCamera);
-		DrawTexture(background_2, 0, 0, WHITE);
+		DrawTexture(background_2, 0, 400, WHITE);
 		DrawTextEx(font, "LEVEL 1", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
 		enemy_lv2.DrawEnemy();
 		DrawTextEx(font, "Kill him to pass on", { 800, 600 }, 36, 4, WHITE);
