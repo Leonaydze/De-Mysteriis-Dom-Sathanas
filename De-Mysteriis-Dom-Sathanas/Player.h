@@ -29,7 +29,7 @@ private:
 
 	Texture2D _playerTexture;
 	Font _playerFont;
-	Rectangle _frameRectangle{ 170.0f, 0.0f, 170.0f, 128.0f };
+	Rectangle _frameRectangle{ 176.0f, 0.0f, 176.0f, 128.0f };
 	
 	Sound _playerDeath;
 public:
