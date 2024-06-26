@@ -76,6 +76,12 @@
     <Image Include="Resources\MAIN_MENU SCREEN.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
+    <Image Include="Resources\background_1.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="Resources\background_2.jpg">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Resources\KHTitle.otf">

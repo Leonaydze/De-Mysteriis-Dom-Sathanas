@@ -11,6 +11,8 @@ extern GameScreen _currentScreen = MAIN_MENU;
 
 Font font;
 
+Texture2D background_1, background_2, background_3 ;
+
 Sound EnemyDeath;
 Sound PlayButton, PlayerTakesDamage, EnemyTakesDamage, EnemyTakesDamage_2, EnemyTakesDamage_3, PlayerJump;
 Sound MainMenuTheme, Level_1Theme, Level_2Theme, Level_3Theme;
@@ -66,6 +68,9 @@ bool EventTriggered(double interval)
 
 void Init() {
 	font = LoadFont("Resources\\KHTitle.otf");
+
+	background_1 = LoadTexture("Resources\\background_1.png");
+	background_1.width *= 2;
 
 	EnemyDeath = LoadSound("Resources\\EnemyDeath.wav");
 
@@ -295,8 +300,7 @@ void DrawMap() {
 		break;
 	case LEVEL_1:
 		BeginMode2D(_playerCamera);
-		leftBorder.GroundDraw();
-		mainGroundFloor.GroundDraw();
+		DrawTexture(background_1, 0, 0, WHITE);
 		DrawTextEx(font, "TUTORIAL", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
 		pugalo.Draw();
 		door.DrawDoor();

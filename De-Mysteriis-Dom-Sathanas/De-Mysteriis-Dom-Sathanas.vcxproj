@@ -146,6 +146,8 @@
     <ClInclude Include="Pugalo.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Resources\background_1.png" />
+    <Image Include="Resources\background_2.jpg" />
     <Image Include="Resources\MAIN_MENU SCREEN.png" />
     <Image Include="Resources\PlayerText.png" />
   </ItemGroup>
