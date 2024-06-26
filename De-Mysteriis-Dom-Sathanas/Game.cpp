@@ -7,7 +7,7 @@
 #include "CustomColors.h"
 #include <ctime>
 
-extern GameScreen _currentScreen = MAIN_MENU;
+extern GameScreen _currentScreen = LEVEL_3;
 
 Font font;
 
@@ -73,6 +73,8 @@ void Init() {
 	background_1.width *= 2;
 	background_2 = LoadTexture("Resources\\background_2.png");
 	background_2.width *= 2;
+	background_3 = LoadTexture("Resources\\background_3.png");
+	background_3.width *= 2;
 
 	EnemyDeath = LoadSound("Resources\\EnemyDeath.wav");
 
@@ -317,7 +319,7 @@ void DrawMap() {
 		break;
 	case LEVEL_2:
 		BeginMode2D(_playerCamera);
-		DrawTexture(background_2, 0, 400, WHITE);
+		DrawTexture(background_2, 0, 0, WHITE);
 		DrawTextEx(font, "LEVEL 1", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
 		enemy_lv2.DrawEnemy();
 		DrawTextEx(font, "Kill him to pass on", { 800, 600 }, 36, 4, WHITE);
@@ -327,7 +329,7 @@ void DrawMap() {
 		break;
 	case LEVEL_3:
 		BeginMode2D(_playerCamera);
-		mainGroundFloor.GroundDraw();
+		DrawTexture(background_3, 0, 0, WHITE);
 		DrawTextEx(font, "LEVEL 2", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
 		platform.GroundDraw();
 		platform_2.GroundDraw();
