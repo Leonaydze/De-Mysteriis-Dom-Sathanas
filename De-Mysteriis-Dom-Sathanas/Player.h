@@ -29,10 +29,11 @@ private:
 
 	Texture2D _playerTexture;
 	Font _playerFont;
-	Rectangle _frameRectangle{ 0.0f, 0.0f, 64.0f, 64.0f };
+	Rectangle _frameRectangle{ 170.0f, 0.0f, 170.0f, 128.0f };
 	
 	Sound _playerDeath;
 public:
+	double _lastUpdateTime = 0;
 	Player();
 
 	Player(Vector2 playerPosition);
@@ -65,4 +66,7 @@ public:
 	void PlayerTakesDamageFromTheEnemy(int damage);
 
 	void PlayerDeath();
+
+	void SetFrameRecX(float x);
+	bool EventTriggered(double interval);
 };

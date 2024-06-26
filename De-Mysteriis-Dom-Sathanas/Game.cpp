@@ -90,7 +90,7 @@ void Init() {
 	Level_2Theme = LoadSound("Resources\\Level_2Theme.wav");
 	Level_3Theme = LoadSound("Resources\\Level_3Theme.wav");
 
-	player = Player({ 50.0f , 950.0f });
+	player = Player({ 50.0f , 900.0f });
 	_playerCamera;
 
 	pugalo = Pugalo({ 2150.0f , 850.0f});
@@ -125,13 +125,14 @@ void EnemyDead(Enemy &enemy) {
 }
 
 void EnemyAttacksThePlayer(Enemy &enemy) {
-	if (player.GetPlayerPositionX() + 64 >= enemy.GetEnemyPositionX() - 100
-		&& player.GetPlayerPositionX() <= enemy.GetEnemyPositionX() + 164
-		&& player.GetPlayerPositionY() >= enemy.GetEnemyPositionY() - 40
-		&& player. GetPlayerPositionY() + 64 <= enemy.GetEnemyPositionY() + 104 && enemy.GetEnemyHealth() > 0){
+	if (player.GetPlayerHealth() > 0 && player.GetPlayerPositionX() + 128 >= enemy.GetEnemyPositionX() - 100
+		&& player.GetPlayerPositionX() <= enemy.GetEnemyPositionX() + 228
+		&& player.GetPlayerPositionY() >= enemy.GetEnemyPositionY() - 70
+		&& player. GetPlayerPositionY() + 198 <= enemy.GetEnemyPositionY() + 198 && enemy.GetEnemyHealth() > 0){
 		if (EventTriggered(1.0f)) {
 			PlaySound(PlayerTakesDamage);
 			player.PlayerTakesDamageFromTheEnemy(enemy.GetEnemyDamage());
+			player.SetFrameRecX(510);
 		}
 	}
 }
@@ -153,24 +154,26 @@ void SoundEnemyTakesDamage() {
 }
 
 void PlayerAttacksEnemy(Enemy &enemy) {
-	if (player.GetPlayerPositionX() + 64 >= enemy.GetEnemyPositionX() - 70
-		&& player.GetPlayerPositionX() <= enemy.GetEnemyPositionX() + 134
-		&& player.GetPlayerPositionY() >= enemy.GetEnemyPositionY() - 40
-		&& player.GetPlayerPositionY() + 64 <= enemy.GetEnemyPositionY() + 104) {
+	if (player.GetPlayerHealth() > 0 && player.GetPlayerPositionX() + 128 >= enemy.GetEnemyPositionX() - 80
+		&& player.GetPlayerPositionX() <= enemy.GetEnemyPositionX() + 208
+		&& player.GetPlayerPositionY() >= enemy.GetEnemyPositionY() - 70
+		&& player.GetPlayerPositionY() + 128 <= enemy.GetEnemyPositionY() + 198) {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && EventTriggered(0.5f)) {
 			SoundEnemyTakesDamage();
 			enemy.EnemyTakesDamageFromThePlayer(player.GetPlayerDamage());
+			player.SetFrameRecX(0);
 		}
 	}
 }
 
 void PlayerAttacksPugalo(Pugalo& pugalo) {
-	if (player.GetPlayerPositionX() + 64 >= pugalo.GetPugaloPositionX() - 70
-		&& player.GetPlayerPositionX() <= pugalo.GetPugaloPositionX() + 134
-		&& player.GetPlayerPositionY() >= pugalo.GetPugaloPositionY() - 40) {
+	if (player.GetPlayerHealth() > 0 && player.GetPlayerPositionX() + 128 >= pugalo.GetPugaloPositionX() - 70
+		&& player.GetPlayerPositionX() <= pugalo.GetPugaloPositionX() + 198
+		&& player.GetPlayerPositionY() >= pugalo.GetPugaloPositionY() - 198) {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && EventTriggered(0.5f)) {
 			SoundEnemyTakesDamage();
 			pugalo.SetFrameRecX(124);
+			player.SetFrameRecX(0);
 		}
 		if (EventTriggered(1.0f)) {
 			pugalo.SetFrameRecX(0);
@@ -179,11 +182,11 @@ void PlayerAttacksPugalo(Pugalo& pugalo) {
 }
 
 void EnemyGoesToThePlayer(Enemy &enemy) {
-	if (player.GetPlayerPositionX() + 64 >= enemy.GetEnemyPositionX() - 250
-		&& player.GetPlayerPositionX() + 64 <= enemy.GetEnemyPositionX() + 64 && enemy.GetEnemyHealth() > 0) {
+	if (player.GetPlayerPositionX() + 128 >= enemy.GetEnemyPositionX() - 250
+		&& player.GetPlayerPositionX() + 128 <= enemy.GetEnemyPositionX() + 128 && enemy.GetEnemyHealth() > 0) {
 		enemy.EnemyMoveX(-5.5f);
 	}
-	if (player.GetPlayerPositionX() + 64 <= enemy.GetEnemyPositionX() + 250
+	if (player.GetPlayerPositionX() + 128 <= enemy.GetEnemyPositionX() + 378
 		&& player.GetPlayerPositionX() >= enemy.GetEnemyPositionX() && enemy.GetEnemyHealth() > 0) {
 		enemy.EnemyMoveX(5.5f);
 	}
@@ -196,8 +199,8 @@ bool EnemyOnGround(Enemy &enemy, Ground& ground) {
 
 bool PlayerOnGround(Player player, Ground& ground) {
 	player.SetPlayerCanJump(true);
-	return (player.GetPlayerPositionX() + 64 >= ground.GetGroundPositionX() && player.GetPlayerPositionX() <= ground.GetGroundPositionX() + ground.GetGroundWidth()
-		&& player.GetPlayerPositionY() + 64 >= ground.GetGroundPositionY() + 15 && player.GetPlayerPositionY() <= ground.GetGroundPositionY() + ground.GetGroundHeight());
+	return (player.GetPlayerPositionX() + 128 >= ground.GetGroundPositionX() && player.GetPlayerPositionX() <= ground.GetGroundPositionX() + ground.GetGroundWidth()
+		&& player.GetPlayerPositionY() + 128 >= ground.GetGroundPositionY() + 15 && player.GetPlayerPositionY() <= ground.GetGroundPositionY() + ground.GetGroundHeight());
 }
 
 void PlayerCanWalk(Player player, Ground &ground) {
@@ -272,7 +275,7 @@ void MapLogic() {
 				player.GetPlayerPositionY() >= door.DoorPositionY() && player.GetPlayerPositionY() + 64 <= door.DoorPositionY() + 128) {
 				player.PlayerTakesDamageFromTheEnemy(-(100 - player.GetPlayerHealth()));
 				_currentScreen = LEVEL_3;
-				player.SetPlayerPosition({ 50.0f , 950.0f });
+				player.SetPlayerPosition({ 50.0f , 900.0f });
 			}
 		}
 		break;
@@ -356,6 +359,7 @@ void Update() {
 	
 	if (player.IsPlayerJump() && !player.PlayerMaxJump() && player.GetPlayerCanJump()) {
 		player.MoveVertically();
+		player.SetFrameRecX(680);
 	}
 	else if (PlayerOnGround(player, mainGroundFloor)) {
 		player.SetPlayerCanJump(true);
