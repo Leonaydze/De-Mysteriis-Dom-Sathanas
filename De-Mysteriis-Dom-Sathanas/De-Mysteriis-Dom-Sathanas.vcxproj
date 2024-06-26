@@ -150,6 +150,7 @@
     <Image Include="Resources\background_2.jpg" />
     <Image Include="Resources\MAIN_MENU SCREEN.png" />
     <Image Include="Resources\PlayerText.png" />
+    <Image Include="Resources\Pugalo_atlas.png" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Resources\KHTitle.otf" />

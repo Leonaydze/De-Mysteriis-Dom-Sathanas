@@ -71,6 +71,8 @@ void Init() {
 
 	background_1 = LoadTexture("Resources\\background_1.png");
 	background_1.width *= 2;
+	background_2 = LoadTexture("Resources\\background_2.jpg");
+	background_2.width *= 2;
 
 	EnemyDeath = LoadSound("Resources\\EnemyDeath.wav");
 
@@ -89,7 +91,7 @@ void Init() {
 	player = Player({ 50.0f , 950.0f });
 	_playerCamera;
 
-	pugalo = Pugalo({ 2150.0f , 930.0f});
+	pugalo = Pugalo({ 2150.0f , 850.0f});
 
 	mainGroundFloor = { { -1000 , 1000 } , 5400, 1500, darkGrey };
 	leftBorder = { { -1000.0f , 0.0f }, 1000, 5000, DARKGRAY };
@@ -166,6 +168,10 @@ void PlayerAttacksPugalo(Pugalo& pugalo) {
 		&& player.GetPlayerPositionY() >= pugalo.GetPugaloPositionY() - 40) {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && EventTriggered(0.5f)) {
 			SoundEnemyTakesDamage();
+			pugalo.SetFrameRecX(124);
+		}
+		if (EventTriggered(1.0f)) {
+			pugalo.SetFrameRecX(0);
 		}
 	}
 }
@@ -300,7 +306,7 @@ void DrawMap() {
 		break;
 	case LEVEL_1:
 		BeginMode2D(_playerCamera);
-		DrawTexture(background_1, 0, 0, WHITE);
+		DrawTexture(background_1, -400, 0, WHITE);
 		DrawTextEx(font, "TUTORIAL", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
 		pugalo.Draw();
 		door.DrawDoor();
@@ -311,8 +317,7 @@ void DrawMap() {
 		break;
 	case LEVEL_2:
 		BeginMode2D(_playerCamera);
-		leftBorder.GroundDraw();
-		mainGroundFloor.GroundDraw();
+		DrawTexture(background_2, 0, 0, WHITE);
 		DrawTextEx(font, "LEVEL 1", { player.GetPlayerPositionX() - 900, player.GetPlayerPositionY() - 700 }, 42, 4, WHITE);
 		enemy_lv2.DrawEnemy();
 		DrawTextEx(font, "Kill him to pass on", { 800, 600 }, 36, 4, WHITE);

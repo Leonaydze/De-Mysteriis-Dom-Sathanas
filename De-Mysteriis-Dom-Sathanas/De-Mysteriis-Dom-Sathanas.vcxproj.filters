@@ -82,6 +82,9 @@
     <Image Include="Resources\background_2.jpg">
       <Filter>Файлы ресурсов</Filter>
     </Image>
+    <Image Include="Resources\Pugalo_atlas.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Resources\KHTitle.otf">
