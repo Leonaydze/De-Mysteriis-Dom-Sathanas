@@ -115,6 +115,26 @@ void Init() {
 	enemy_lv3_4 = { { 2800 , 660 }, 100, 15 };
 }
 
+void RandomizePlayerAttackAnimation() {
+	srand(time(NULL));
+
+	int n = rand() % 4;
+
+	switch (n) {
+	case 0:
+		player.SetFrameRecX(4936.0f);
+		break;
+	case 1:
+		player.SetFrameRecX(4048.0f);
+		break;
+	case 2:
+		player.SetFrameRecX(1408.0f);
+		break;
+	case 3:
+		player.SetFrameRecX(352.0f);
+		break;
+	}
+}
 
 void EnemyDead(Enemy &enemy) {
 	if (enemy.GetEnemyHealth() <= 0 && !enemy.BoolCheckIsEnemyDeath()) {
@@ -163,7 +183,7 @@ void PlayerAttacksEnemy(Enemy &enemy) {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && EventTriggered(0.5f)) {
 			SoundEnemyTakesDamage();
 			enemy.EnemyTakesDamageFromThePlayer(player.GetPlayerDamage());
-			player.SetFrameRecX(4936.0f);
+			RandomizePlayerAttackAnimation();
 		}
 	}
 }
@@ -175,7 +195,7 @@ void PlayerAttacksPugalo(Pugalo& pugalo) {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && EventTriggered(0.5f)) {
 			SoundEnemyTakesDamage();
 			pugalo.SetFrameRecX(124);
-			player.SetFrameRecX(0);
+			RandomizePlayerAttackAnimation();
 		}
 		if (EventTriggered(1.0f)) {
 			pugalo.SetFrameRecX(0);
