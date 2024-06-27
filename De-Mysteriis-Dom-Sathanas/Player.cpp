@@ -25,7 +25,7 @@ Player::Player() {
 
 Player::Player(Vector2 playerPosition) {
 	_playerPosition = playerPosition;
-	_playerTexture = LoadTexture("Resources\\Player_atlas.png");
+	_playerTexture = LoadTexture("Resources\\Player.png");
 	_playerTexture.height *= 2;
 	_playerTexture.width *= 2;
 	_playerFont = LoadFont("Resources\\KHTitle.otf");
@@ -84,11 +84,12 @@ void Player::PlayerController() {
 		_playerJump = true;
 	}
 	if ((IsKeyDown(KEY_A) || IsKeyDown(KEY_D)) && _health > 0) {
-		SetFrameRecX(850);
+		SetFrameRecX(2464.0f);
 	}
 	else if(!IsPlayerJump() && _health > 0 && !IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && EventTriggered(0.5f)) {
-		SetFrameRecX(170);
+		SetFrameRecX(1588.0f);
 	}
+
 	_playerVelocity.y = 0;
 	_playerVelocity.x = 0;
 }
@@ -154,7 +155,7 @@ void Player::PlayerDeath(){
 		DrawTextEx(_playerFont, "YOU ARE DEAD", { _playerPosition.x - 200, _playerPosition.y - 500 }, 50, 4, WHITE);
 		DrawTextEx(_playerFont,"PRESS ESC TO QUIT", { _playerPosition.x - 270, _playerPosition.y - 450}, 50, 4,  WHITE);
 		PlaySound(_playerDeath);
-		SetFrameRecX(340);
+		SetFrameRecX(7216.0f);
 	}
 }
 

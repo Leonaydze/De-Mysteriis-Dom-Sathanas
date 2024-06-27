@@ -13,6 +13,7 @@ Enemy::Enemy(Vector2 enemyPosition, int health, int damage) {
 	_enemyPosition = enemyPosition;
 	_health = health;
 	_damage = damage;
+	_enemyTexture = LoadTexture("Resources\\Enemy_atlas.png");
 }
 
 int Enemy::GetEnemyDamage() {
@@ -20,7 +21,8 @@ int Enemy::GetEnemyDamage() {
 }
 
 void Enemy::DrawEnemy() {
-	DrawRectangle(_enemyPosition.x, _enemyPosition.y, 64, 64, RED);
+	DrawTextureRec(_enemyTexture, _frameRec, _enemyPosition, WHITE);
+	//DrawRectangle(_enemyPosition.x, _enemyPosition.y, 64, 64, RED);
 	DrawEnemyHUD();
 }
 
@@ -58,5 +60,13 @@ bool Enemy::BoolCheckIsEnemyDeath()
 
 void Enemy::SetBoolCheckIsEnemyDeath(bool checkIsEnemyDeath){
 	_checkIsEnemyDeath = checkIsEnemyDeath;
+}
+
+void Enemy::SetFrameRecX(float x){
+	_frameRec.x = x;
+}
+
+void Enemy::SetFrameRecWidth(float width){
+	_frameRec.width = width;
 }
 

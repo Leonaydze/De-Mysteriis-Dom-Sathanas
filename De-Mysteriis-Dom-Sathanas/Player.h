@@ -29,7 +29,7 @@ private:
 
 	Texture2D _playerTexture;
 	Font _playerFont;
-	Rectangle _frameRectangle{ 176.0f, 0.0f, 176.0f, 128.0f };
+	Rectangle _frameRectangle{ 1585.0f, 128.0f, 176.0f, 150.0f };
 	
 	Sound _playerDeath;
 public:
@@ -68,6 +68,5 @@ public:
 	void PlayerDeath();
 
 	void SetFrameRecX(float x);
-	void SetFrameRecWidth(float width);
 	bool EventTriggered(double interval);
 };

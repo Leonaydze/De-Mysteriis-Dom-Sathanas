@@ -90,7 +90,7 @@ void Init() {
 	Level_2Theme = LoadSound("Resources\\Level_2Theme.wav");
 	Level_3Theme = LoadSound("Resources\\Level_3Theme.wav");
 
-	player = Player({ 50.0f , 900.0f });
+	player = Player({ 50.0f , 880.0f });
 	_playerCamera;
 
 	pugalo = Pugalo({ 2150.0f , 850.0f});
@@ -100,25 +100,26 @@ void Init() {
 
 	door = Door( { 3000 , 900 } );
 
-	enemy_lv2 = { { 1488.0f , 950.0f }, 100, 15 };
+	enemy_lv2 = { { 1488.0f , 900.0f }, 100, 15 };
 
 	platform = { { 1000 , 900 }, 256, 32, DARKGRAY };
-	enemy_lv3 = { { 1020 , 820 }, 100, 15 };
+	enemy_lv3 = { { 1020 , 700 }, 100, 15 };
 
 	platform_2 = { { 1300 , 740 }, 256, 32, DARKGRAY };
-	enemy_lv3_2 = { { 1320 , 680 }, 100, 15 };
+	enemy_lv3_2 = { { 1320 , 540 }, 100, 15 };
 
 	platform_3 = { { 2300 , 740 }, 256, 32, DARKGRAY };
-	enemy_lv3_3 = { { 2400 , 680 }, 100, 15 };
+	enemy_lv3_3 = { { 2400 , 540 }, 100, 15 };
 
 	platform_4 = { { 2700 , 860 }, 256, 32, DARKGRAY };
-	enemy_lv3_4 = { { 2800 , 800 }, 100, 15 };
+	enemy_lv3_4 = { { 2800 , 660 }, 100, 15 };
 }
 
 
 void EnemyDead(Enemy &enemy) {
 	if (enemy.GetEnemyHealth() <= 0 && !enemy.BoolCheckIsEnemyDeath()) {
 		_playerKillsCount++;
+		enemy.SetFrameRecX(396.0f);
 		enemy.SetBoolCheckIsEnemyDeath(true);
 		PlaySound(EnemyDeath);
 	}
@@ -126,13 +127,14 @@ void EnemyDead(Enemy &enemy) {
 
 void EnemyAttacksThePlayer(Enemy &enemy) {
 	if (player.GetPlayerHealth() > 0 && player.GetPlayerPositionX() + 128 >= enemy.GetEnemyPositionX() - 100
-		&& player.GetPlayerPositionX() <= enemy.GetEnemyPositionX() + 228
-		&& player.GetPlayerPositionY() >= enemy.GetEnemyPositionY() - 70
-		&& player. GetPlayerPositionY() + 198 <= enemy.GetEnemyPositionY() + 198 && enemy.GetEnemyHealth() > 0){
+		&& player.GetPlayerPositionX() <= enemy.GetEnemyPositionX() + 232
+		&& player.GetPlayerPositionY() >= enemy.GetEnemyPositionY() - 90
+		&& player. GetPlayerPositionY() + 198 <= enemy.GetEnemyPositionY() + 222 && enemy.GetEnemyHealth() > 0){
 		if (EventTriggered(1.0f)) {
 			PlaySound(PlayerTakesDamage);
+			enemy.SetFrameRecX(264.0f);
 			player.PlayerTakesDamageFromTheEnemy(enemy.GetEnemyDamage());
-			player.SetFrameRecX(510);
+			player.SetFrameRecX(7392.0f);
 		}
 	}
 }
@@ -155,13 +157,13 @@ void SoundEnemyTakesDamage() {
 
 void PlayerAttacksEnemy(Enemy &enemy) {
 	if (player.GetPlayerHealth() > 0 && player.GetPlayerPositionX() + 128 >= enemy.GetEnemyPositionX() - 80
-		&& player.GetPlayerPositionX() <= enemy.GetEnemyPositionX() + 208
-		&& player.GetPlayerPositionY() >= enemy.GetEnemyPositionY() - 70
-		&& player.GetPlayerPositionY() + 128 <= enemy.GetEnemyPositionY() + 198) {
+		&& player.GetPlayerPositionX() <= enemy.GetEnemyPositionX() + 212
+		&& player.GetPlayerPositionY() >= enemy.GetEnemyPositionY() - 80
+		&& player.GetPlayerPositionY() + 128 <= enemy.GetEnemyPositionY() + 212) {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && EventTriggered(0.5f)) {
 			SoundEnemyTakesDamage();
 			enemy.EnemyTakesDamageFromThePlayer(player.GetPlayerDamage());
-			player.SetFrameRecX(0);
+			player.SetFrameRecX(4936.0f);
 		}
 	}
 }
@@ -185,21 +187,23 @@ void EnemyGoesToThePlayer(Enemy &enemy) {
 	if (player.GetPlayerPositionX() + 128 >= enemy.GetEnemyPositionX() - 250
 		&& player.GetPlayerPositionX() + 128 <= enemy.GetEnemyPositionX() + 128 && enemy.GetEnemyHealth() > 0) {
 		enemy.EnemyMoveX(-5.5f);
+		enemy.SetFrameRecWidth(-132.0f);
 	}
 	if (player.GetPlayerPositionX() + 128 <= enemy.GetEnemyPositionX() + 378
 		&& player.GetPlayerPositionX() >= enemy.GetEnemyPositionX() && enemy.GetEnemyHealth() > 0) {
 		enemy.EnemyMoveX(5.5f);
+		enemy.SetFrameRecWidth(132.0f);
 	}
 }
 
 bool EnemyOnGround(Enemy &enemy, Ground& ground) {
-	return (enemy.GetEnemyPositionX() + 64 >= ground.GetGroundPositionX() && enemy.GetEnemyPositionX() <= ground.GetGroundPositionX() + ground.GetGroundWidth()
-		&& enemy.GetEnemyPositionY() + 64 >= ground.GetGroundPositionY() + 15 && enemy.GetEnemyPositionY() <= ground.GetGroundPositionY() + ground.GetGroundHeight());
+	return (enemy.GetEnemyPositionX() + 80 >= ground.GetGroundPositionX() && enemy.GetEnemyPositionX() <= ground.GetGroundPositionX() + ground.GetGroundWidth()
+		&& enemy.GetEnemyPositionY() + 132 >= ground.GetGroundPositionY() + 15 && enemy.GetEnemyPositionY() <= ground.GetGroundPositionY() + ground.GetGroundHeight());
 }
 
 bool PlayerOnGround(Player player, Ground& ground) {
 	player.SetPlayerCanJump(true);
-	return (player.GetPlayerPositionX() + 128 >= ground.GetGroundPositionX() && player.GetPlayerPositionX() <= ground.GetGroundPositionX() + ground.GetGroundWidth()
+	return (player.GetPlayerPositionX() + 88 >= ground.GetGroundPositionX() && player.GetPlayerPositionX() + 40 <= ground.GetGroundPositionX() + ground.GetGroundWidth()
 		&& player.GetPlayerPositionY() + 128 >= ground.GetGroundPositionY() + 15 && player.GetPlayerPositionY() <= ground.GetGroundPositionY() + ground.GetGroundHeight());
 }
 
@@ -214,9 +218,9 @@ void PlayerCanWalk(Player player, Ground &ground) {
 }
 
 void AttackEnemyAndPlayer(Enemy &enemy) {
-	EnemyAttacksThePlayer(enemy);
 	PlayerAttacksEnemy(enemy);
 	EnemyGoesToThePlayer(enemy);
+	EnemyAttacksThePlayer(enemy);
 	EnemyDead(enemy);
 }
 
@@ -259,7 +263,7 @@ void MapLogic() {
 		if (player.GetPlayerPositionX() + 128 >= door.DoorPositionX() && player.GetPlayerPositionX() <= door.DoorPositionX() + 80 &&
 			player.GetPlayerPositionY() >= door.DoorPositionY() - 40 && player.GetPlayerPositionY() + 128 <= door.DoorPositionY() + 128){
 			_currentScreen = LEVEL_2;
-			player.SetPlayerPosition({ 50.0f , 900.0f });
+			player.SetPlayerPosition({ 50.0f , 880.0f });
 		}
 		break;
 	case LEVEL_2:
@@ -359,7 +363,7 @@ void Update() {
 	
 	if (player.IsPlayerJump() && !player.PlayerMaxJump() && player.GetPlayerCanJump()) {
 		player.MoveVertically();
-		player.SetFrameRecX(680);
+		player.SetFrameRecX(5456.0f);
 	}
 	else if (PlayerOnGround(player, mainGroundFloor)) {
 		player.SetPlayerCanJump(true);

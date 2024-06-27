@@ -13,6 +13,9 @@ private:
 	void DrawEnemyHUD();
 
 	bool _checkIsEnemyDeath = false;
+
+	Texture2D _enemyTexture;
+	Rectangle _frameRec{ 0, 0, 132.0f, 128.0f};
 public:
 	Enemy();
 
@@ -34,5 +37,8 @@ public:
 
 	bool BoolCheckIsEnemyDeath();
 	void SetBoolCheckIsEnemyDeath(bool checkIsEnemyDeath);
+
+	void SetFrameRecX(float x);
+	void SetFrameRecWidth(float width);
 };
 
