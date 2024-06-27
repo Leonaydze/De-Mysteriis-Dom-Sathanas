@@ -3,7 +3,7 @@
 
 int main()
 {
-	InitWindow(GetMonitorWidth(GetCurrentMonitor()), GetMonitorHeight(GetCurrentMonitor()), "DE-MYSTERIIS-DOM-SATHANAS DEV_BUILD");
+	InitWindow(GetMonitorWidth(GetCurrentMonitor()), GetMonitorHeight(GetCurrentMonitor()), "DE-MYSTERIIS-DOM-SATHANAS");
 
 	InitAudioDevice();
 
