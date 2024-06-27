@@ -115,7 +115,7 @@ void Init() {
 	enemy_lv3_4 = { { 2800 , 660 }, 100, 15 };
 }
 
-void RandomizePlayerAttackAnimation() {
+void RandomizePlayerAttack() {
 	srand(time(NULL));
 
 	int n = rand() % 4;
@@ -123,15 +123,19 @@ void RandomizePlayerAttackAnimation() {
 	switch (n) {
 	case 0:
 		player.SetFrameRecX(4936.0f);
+		PlaySound(EnemyTakesDamage_3);
 		break;
 	case 1:
 		player.SetFrameRecX(4048.0f);
+		PlaySound(EnemyTakesDamage_2);
 		break;
 	case 2:
 		player.SetFrameRecX(1408.0f);
+		PlaySound(EnemyTakesDamage);
 		break;
 	case 3:
 		player.SetFrameRecX(352.0f);
+		PlaySound(EnemyTakesDamage_2);
 		break;
 	}
 }
@@ -159,31 +163,14 @@ void EnemyAttacksThePlayer(Enemy &enemy) {
 	}
 }
 
-void SoundEnemyTakesDamage() {
-	int choice = rand() % 3;
-
-	switch (choice){
-		case 0:
-			PlaySound(EnemyTakesDamage);
-			break;
-		case 1:
-			PlaySound(EnemyTakesDamage_2);
-			break;
-		case 2:
-			PlaySound(EnemyTakesDamage_3);
-			break;
-	}
-}
-
 void PlayerAttacksEnemy(Enemy &enemy) {
 	if (player.GetPlayerHealth() > 0 && player.GetPlayerPositionX() + 128 >= enemy.GetEnemyPositionX() - 80
 		&& player.GetPlayerPositionX() <= enemy.GetEnemyPositionX() + 212
 		&& player.GetPlayerPositionY() >= enemy.GetEnemyPositionY() - 80
 		&& player.GetPlayerPositionY() + 128 <= enemy.GetEnemyPositionY() + 212) {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && EventTriggered(0.5f)) {
-			SoundEnemyTakesDamage();
 			enemy.EnemyTakesDamageFromThePlayer(player.GetPlayerDamage());
-			RandomizePlayerAttackAnimation();
+			RandomizePlayerAttack();
 		}
 	}
 }
@@ -193,9 +180,8 @@ void PlayerAttacksPugalo(Pugalo& pugalo) {
 		&& player.GetPlayerPositionX() <= pugalo.GetPugaloPositionX() + 198
 		&& player.GetPlayerPositionY() >= pugalo.GetPugaloPositionY() - 198) {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && EventTriggered(0.5f)) {
-			SoundEnemyTakesDamage();
 			pugalo.SetFrameRecX(124);
-			RandomizePlayerAttackAnimation();
+			RandomizePlayerAttack();
 		}
 		if (EventTriggered(1.0f)) {
 			pugalo.SetFrameRecX(0);
